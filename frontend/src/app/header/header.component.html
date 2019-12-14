@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
+  <!-- Logo -->
+  <a href="#" class="navbar-brand">PowerList</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <!-- Notification Bell -->
+    <li class="nav-item">
+      <a href="#" class="nav-link">Bell</a>
+    </li>
+    <!-- Settings Dropdown -->
+    <li class="nav-item dropdown">
+     <button
+       class="dropdown-toggle btn btn-outline-secondary"
+       aria-pressed="true"
+       type="button"
+       data-toggle="dropdown"
+       target="#dropdownmenu"
+     >
+     <span class="navbar-toggler-icon"></span>
+     </button>
+      <!-- Dropdown menu -->
+      <div *ngIf="showMenu" class="dropdown-menu" id="dropdownmenu">
+        <a href="#" class="dropdown-item">Settings</a>
+        <a href="#" class="dropdown-item">Podcast</a>
+        <a href="#" class="dropdown-item">Log Out</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <!-- Date information -->
+  <div style="padding: 40px">
+    <h3>Today</h3>
+    <p>Tuesday, 8 August 2019</p>
+  </div>
+  <!-- Add task button-->
+  <div class="col-md-11 text-center">
+    <button style="width: 20%; height: 30px;" (click)="onTaskAdded()">Add</button>
+  </div>
+  <!-- List of Tasks -->
+  <div class="col-md-10" style="padding-left: 70px">
+    <ul class="list-group">
+      <!-- Individual task item -->
+      <li class="list-group-item" style="margin: 10px 0;" *ngFor="let tasks of taskArray">
+        <!-- edit task component -->
+        <app-task-edit
+          *ngIf="tasks.edit"
+          (taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: tasks.count})"
+        ></app-task-edit>
+        <!-- Task item component -->
+        <app-task-item
+          *ngIf="!tasks.edit"
+          [task]="tasks"
+          (editedTask)="onTaskEdited($event.editedTaskCount)"
+        ></app-task-item>
+      </li>
+    </ul>
+  </div>
+  <!-- Footer component -->
+  <div class="align-items-end" style="height: 50px">
+    <app-footer></app-footer>
+  </div>
+</div>
