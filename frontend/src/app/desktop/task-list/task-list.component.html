@@ -9,10 +9,10 @@
     <button style="width: 20%; height: 30px;" (click)="onTaskAdded()">Add</button>
   </div>
   <!-- List of Tasks -->
-  <div class="col-md-10" style="padding-left: 70px">
+  <div class="col-md-10" style="padding-left: 70px;">
     <ul class="list-group">
       <!-- Individual task item -->
-      <li class="list-group-item" style="margin: 10px 0;" *ngFor="let tasks of taskArray">
+      <li class="list-group-item"  *ngFor="let tasks of taskArray" style=" padding: 0;" appBorderHighlight>
         <!-- edit task component -->
         <app-task-edit
           *ngIf="tasks.edit"
@@ -22,7 +22,7 @@
         <app-task-item
           *ngIf="!tasks.edit"
           [task]="tasks"
-          (editedTask)="onTaskEdited($event.editedTaskCount)"
+          (editedTask)="onTaskEdited($event)"
         ></app-task-item>
       </li>
     </ul>

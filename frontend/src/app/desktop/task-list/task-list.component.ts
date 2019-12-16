@@ -10,9 +10,9 @@ import { TaskModel } from './task-item/task.model';
   edit = false;
   taskArray = [
     {description: '45 minute workout', completion: false, count: 1, edit: false},
-    {description: 'Wake up at 5:00am', completion: true, count: 2, edit: false},
-    {description: 'read 10 pages', completion: true, count: 3, edit: false},
-    {description: 'drink 1 gallon of water', completion: true, count: 4, edit: false}
+    {description: 'Wake up at 5:00am', completion: false, count: 2, edit: false},
+    {description: 'read 10 pages', completion: false, count: 3, edit: false},
+    {description: 'drink 1 gallon of water', completion: false, count: 4, edit: false}
   ];
 
   constructor() {}
@@ -21,18 +21,27 @@ import { TaskModel } from './task-item/task.model';
   }
  // Save changes of an edited task to the array
   onTaskSaved(newTask: {newDescription: string, count: number}) {
-    console.log(newTask.newDescription);
     // Leave the current description if new wasn't provided
-    if (newTask.newDescription !== undefined) {
+    if (newTask.newDescription !== '') {
       this.taskArray[newTask.count - 1].description = newTask.newDescription;
     }
     this.taskArray[newTask.count - 1].edit = false;
   }
 // Change to edit mode of an task item
-  onTaskEdited(editedTaskCount: number) {
-    console.log(editedTaskCount);
-    this.taskArray[editedTaskCount - 1].edit = true;
+  onTaskEdited(editObj) {
+    if (editObj.action === 'edit') {
+      this.taskArray[editObj.editedTaskCount - 1].edit = true;
+    } else if (editObj.action === 'remove') {
+      this.taskArray.splice(editObj.editedTaskCount - 1, 1);
 
+      let currentTaskCount = 1;
+      for (const task of this.taskArray) {
+        task.count = currentTaskCount;
+        currentTaskCount ++;
+      }
+    } else if (editObj.action === 'check') {
+      this.taskArray[editObj.editedTaskCount - 1].completion = !this.taskArray[editObj.editedTaskCount - 1].completion;
+    }
   }
 // Add a new task to the array
   onTaskAdded() {

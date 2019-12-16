@@ -8,7 +8,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
 export class TaskItemComponent implements OnInit {
   @Input() task: {description: string, completion: boolean, count: number, edit: boolean};
-  @Output() editedTask = new EventEmitter<{editedTaskCount: number}>();
+  @Output() editedTask = new EventEmitter<{editedTaskCount: number, action: string}>();
   constructor() {}
 
   ngOnInit() {
@@ -17,7 +17,22 @@ export class TaskItemComponent implements OnInit {
   // Emit the count of the task to be edited.
   onTaskEdit() {
     this.editedTask.emit({
-      editedTaskCount: this.task.count
+      editedTaskCount: this.task.count,
+      action: 'edit'
+    });
+  }
+  // Emit the count of the task to be removed
+  onTaskRemove() {
+    this.editedTask.emit({
+      editedTaskCount: this.task.count,
+      action: 'remove'
+    });
+  }
+
+  onCheckboxChange() {
+    this.editedTask.emit({
+      editedTaskCount: this.task.count,
+      action: 'check'
     });
   }
 }

@@ -10,6 +10,7 @@ import {TaskItemComponent} from './desktop/task-list/task-item/task-item.compone
 import {FooterComponent} from './desktop/task-list/footer/footer.component';
 import { TaskEditComponent } from './desktop/task-list/task-edit/task-edit.component';
 import {FormsModule} from '@angular/forms';
+import {BorderHighlightDirective} from './directives/border-highlight.directive';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {FormsModule} from '@angular/forms';
     TaskItemComponent,
     FooterComponent,
     TaskEditComponent,
-    TaskEditComponent
+    TaskEditComponent,
+    BorderHighlightDirective
   ],
   imports: [
     BrowserModule,

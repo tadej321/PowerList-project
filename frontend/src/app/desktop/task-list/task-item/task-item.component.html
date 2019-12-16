@@ -1,19 +1,20 @@
 <div>
-  <div class="row">
+  <div class="row" >
     <!-- Checkbox -->
     <div class="col-md-2 ">
-      <div class="center"><input type="checkbox" name="checkbox"></div>
+      <div class="center"><input type="checkbox" name="checkbox" [checked]="task.completion" (change)="onCheckboxChange()"></div>
     </div>
     <!-- Invisible edit button -->
-      <div class="col-md-8">
-        <button class="button center" on-mouseover="onTaskEdit()">
-            {{task.description}}
-        </button>
-      </div>
+    <div class="col-md-8">
+      <button class="button center" (click)="onTaskEdit()">
+        {{task.description}}
+      </button>
+    </div>
     <!-- Habit and count -->
     <div class="col-md-2" style="line-height: 0.7">
       <p>Task {{task.count}}</p>
       <p>Habit</p>
+      <button class="" (click)="onTaskRemove()">X</button>
     </div>
   </div>
 </div>

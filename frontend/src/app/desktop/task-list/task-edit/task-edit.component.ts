@@ -7,16 +7,17 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class TaskEditComponent implements OnInit {
   @Output() taskSaved = new EventEmitter<{taskDescription: string}>();
-  newTaskDescription;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+
   // Emit the changes of the edited task.
-  onSaveTask() {
+  onSaveTask(descriptionInput: HTMLInputElement) {
     this.taskSaved.emit({
-      taskDescription: this.newTaskDescription
+      taskDescription: descriptionInput.value
     });
   }
 }

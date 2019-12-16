@@ -1,12 +1,16 @@
 <div>
-  <div class="row" on-mouseleave="onSaveTask()">
+  <div class="row">
     <!-- Save task button -->
     <div class="col-md-2 ">
-      <button class="center" >Save</button>
+      <button class="center" (click)="onSaveTask(taskDescriptionInput)">Save</button>
     </div>
     <!-- Textarea input field -->
     <div class="col-md-8">
-      <input type="text" placeholder="Add task" [(ngModel)]="newTaskDescription">
+      <input
+        type="text"
+        placeholder="Add task"
+        #taskDescriptionInput
+      >
     </div>
     <div class="col-md-2" style="line-height: 0.7">
 
