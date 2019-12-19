@@ -9,22 +9,24 @@
       <a href="#" class="nav-link">Bell</a>
     </li>
     <!-- Settings Dropdown -->
-    <li class="nav-item dropdown">
-     <button
-       class="dropdown-toggle btn btn-outline-secondary"
-       aria-pressed="true"
-       type="button"
-       data-toggle="dropdown"
-       target="#dropdownmenu"
-     >
-     <span class="navbar-toggler-icon"></span>
-     </button>
-      <!-- Dropdown menu -->
-      <div *ngIf="showMenu" class="dropdown-menu" id="dropdownmenu">
-        <a href="#" class="dropdown-item">Settings</a>
-        <a href="#" class="dropdown-item">Podcast</a>
-        <a href="#" class="dropdown-item">Log Out</a>
+    <li class="nav-item">
+      <div class="btn-group open">
+        <button
+          class="dropdown-toggle btn btn-outline-secondary"
+          aria-pressed="true"
+          type="button"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Dropdown menu -->
+        <ul class="dropdown-menu">
+          <a href="#" class="dropdown-item">Settings</a>
+          <a href="#" class="dropdown-item">Podcast</a>
+          <a href="#" class="dropdown-item">Log Out</a>
+        </ul>
       </div>
+
+
     </li>
   </ul>
 </nav>

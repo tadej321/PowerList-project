@@ -6,23 +6,26 @@
   </div>
   <!-- Add task button-->
   <div class="col-md-11 text-center">
-    <button style="width: 20%; height: 30px;" (click)="onTaskAdded()">Add</button>
+    <button style="width: 20%; height: 30px;" (click)="onAddTask()">Add</button>
   </div>
   <!-- List of Tasks -->
   <div class="col-md-10" style="padding-left: 70px;">
     <ul class="list-group">
       <!-- Individual task item -->
-      <li class="list-group-item"  *ngFor="let tasks of taskArray" style=" padding: 0;" appBorderHighlight>
+      <li class="list-group-item"  *ngFor="let task of tasks" style=" padding: 0;" appBorderHighlight>
         <!-- edit task component -->
+        <!-- If not using services, add "(taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: task.count})"" to the <app-task-edit> tag -->
         <app-task-edit
-          *ngIf="tasks.edit"
-          (taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: tasks.count})"
+          *ngIf="task.edit"
+          [taskCount]="task.id"
+
         ></app-task-edit>
         <!-- Task item component -->
+        <!-- If not using services, add "(editedTask)="onTaskEdited($event)"" to the <app-task-item> tag -->
         <app-task-item
-          *ngIf="!tasks.edit"
-          [task]="tasks"
-          (editedTask)="onTaskEdited($event)"
+          *ngIf="!task.edit"
+          [task]="task"
+
         ></app-task-item>
       </li>
     </ul>
