@@ -11,6 +11,7 @@ import {FooterComponent} from './desktop/task-list/footer/footer.component';
 import { TaskEditComponent } from './desktop/task-list/task-edit/task-edit.component';
 import {FormsModule} from '@angular/forms';
 import {BorderHighlightDirective} from './directives/border-highlight.directive';
+import {DateTimeUtility} from './shared/date-time.utility';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import {BorderHighlightDirective} from './directives/border-highlight.directive'
     BrowserModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [DateTimeUtility],
   bootstrap: [AppComponent],
 
 })

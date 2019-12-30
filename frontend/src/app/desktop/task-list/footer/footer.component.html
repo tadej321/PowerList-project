@@ -1,26 +1,9 @@
 <div class="container-fluid">
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option1" autocomplete="off" checked>Monday
+    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;" *ngFor="let day of days">
+      <input (click)="onDaySelected(day)" type="radio" name="options" id="option1" autocomplete="off" checked>{{day}}
     </label>
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option2" autocomplete="off">Tuesday
-    </label>
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option3" autocomplete="off">Wednesday
-    </label>
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option4" autocomplete="off">Thursday
-    </label>
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option5" autocomplete="off">Friday
-    </label>
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option6" autocomplete="off">Saturday
-    </label>
-    <label class="btn btn-outline-dark" style="border-right: 1px solid #111111;">
-      <input type="radio" name="options" id="option7" autocomplete="off">Sunday
-    </label>
+
     <!--
     <div style="border-right: 1px solid #111111;">
       <button class="btn btn-light" type="text">Tuesday</button>

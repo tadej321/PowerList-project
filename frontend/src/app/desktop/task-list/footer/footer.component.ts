@@ -1,4 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
+import {TaskService} from '../task.service';
+import {DateTimeUtility} from '../../../shared/date-time.utility';
 
 @Component({
   selector: 'app-footer',
@@ -7,8 +9,18 @@ import {Component, OnInit} from "@angular/core";
 })
 
 export class FooterComponent implements OnInit {
-  constructor() {}
+  currentDay = new Date();
+
+  days: ReadonlyArray<string> = [];
+
+  constructor(private taskService: TaskService) {}
 
   ngOnInit() {
+    const dateTimeUtility = new DateTimeUtility();
+    this.days = dateTimeUtility.getWeekDayArray();
+  }
+
+  onDaySelected(selectedDay: string) {
+
   }
 }

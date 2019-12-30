@@ -2,7 +2,7 @@
   <!-- Date information -->
   <div style="padding: 40px">
     <h3>Today</h3>
-    <p>Tuesday, 8 August 2019</p>
+    <p>{{dateString}}</p>
   </div>
   <!-- Add task button-->
   <div class="col-md-11 text-center">
@@ -13,20 +13,22 @@
     <ul class="list-group">
       <!-- Individual task item -->
       <li class="list-group-item"  *ngFor="let task of tasks" style=" padding: 0;" appBorderHighlight>
-        <!-- edit task component -->
-        <!-- If not using services, add "(taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: task.count})"" to the <app-task-edit> tag -->
-        <app-task-edit
-          *ngIf="task.edit"
-          [taskCount]="task.id"
+        <div>
+          <!-- edit task component -->
+          <!-- If not using services, add "(taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: task.count})"" to the <app-task-edit> tag -->
+          <app-task-edit
+            *ngIf="task.edit"
+            [taskCount]="task.id"
 
-        ></app-task-edit>
-        <!-- Task item component -->
-        <!-- If not using services, add "(editedTask)="onTaskEdited($event)"" to the <app-task-item> tag -->
-        <app-task-item
-          *ngIf="!task.edit"
-          [task]="task"
+          ></app-task-edit>
+          <!-- Task item component -->
+          <!-- If not using services, add "(editedTask)="onTaskEdited($event)"" to the <app-task-item> tag -->
+          <app-task-item
+            *ngIf="!task.edit"
+            [task]="task"
 
-        ></app-task-item>
+          ></app-task-item>
+        </div>
       </li>
     </ul>
   </div>

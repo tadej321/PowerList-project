@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {TaskService} from '../task.service';
+import {TaskModel} from './task.model';
 
 @Component({
   selector: 'app-task-item',
@@ -8,7 +9,7 @@ import {TaskService} from '../task.service';
 })
 
 export class TaskItemComponent implements OnInit {
-  @Input() task: {description: string, completion: boolean, id: number, edit: boolean};
+  @Input() task: TaskModel;
   // @Output() editedTask = new EventEmitter<{editedTaskCount: number, action: string}>();
   constructor(private taskService: TaskService) {}
 
