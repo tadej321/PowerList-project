@@ -21,6 +21,6 @@ export class FooterComponent implements OnInit {
   }
 
   onDaySelected(selectedDay: string) {
-
+    this.taskService.changeDay();
   }
 }

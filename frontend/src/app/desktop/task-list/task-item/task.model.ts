@@ -1,8 +1,10 @@
+import * as moment from "moment";
+
 export interface TaskModel {
   id: number;
   description: string;
   completion: boolean;
-  date: Date;
+  date: moment.Moment;
   edit?: boolean;
 }
 

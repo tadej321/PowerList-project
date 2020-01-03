@@ -1,16 +1,11 @@
 import * as moment from 'moment';
-const now = moment().format('LL');
-const yesterday = moment().format('LL');
+const now = moment();
 export class TaskService {
   taskArray = [
     {description: '45 minute workout', completion: false, id: 1, edit: false, date: now},
     {description: 'Wake up at 5:00am', completion: false, id: 2, edit: false, date: now},
     {description: 'read 10 pages', completion: false, id: 3, edit: false, date: now},
-    {description: 'drink 1 gallon of water', completion: false, id: 4, edit: false, date: now},
-    {description: '45 minute workout', completion: false, id: 1, edit: false, date: now.subtract(1, 'days')},
-    {description: 'Wake up at 5:00am', completion: false, id: 2, edit: false, date: new Date()},
-    {description: 'read 10 pages', completion: false, id: 3, edit: false, date: new Date()},
-    {description: 'drink 1 gallon of water', completion: false, id: 4, edit: false, date: new Date()}
+    {description: 'drink 1 gallon of water', completion: false, id: 4, edit: false, date: now}
   ];
 
 // Save changes of an edited task to the array
@@ -50,7 +45,7 @@ export class TaskService {
       completion: false,
       id: this.taskArray.length + 1,
       edit: true,
-      date: new Date()
+      date: moment()
     });
   }
 

@@ -8,25 +8,20 @@
     <li class="nav-item">
       <a href="#" class="nav-link">Bell</a>
     </li>
-    <!-- Settings Dropdown -->
+    <!-- Dropdown -->
     <li class="nav-item">
-      <div class="btn-group open">
-        <button
-          class="dropdown-toggle btn btn-outline-secondary"
-          aria-pressed="true"
-          type="button"
-        >
+      <div ngbDropdown class="dropdown">
+        <!-- Dropdown Button -->
+        <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- Dropdown menu -->
-        <ul class="dropdown-menu">
+        <!-- Dropdown Menu-->
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
           <a href="#" class="dropdown-item">Settings</a>
           <a href="#" class="dropdown-item">Podcast</a>
           <a href="#" class="dropdown-item">Log Out</a>
-        </ul>
+        </div>
       </div>
-
-
     </li>
   </ul>
 </nav>

@@ -12,6 +12,8 @@ import { TaskEditComponent } from './desktop/task-list/task-edit/task-edit.compo
 import {FormsModule} from '@angular/forms';
 import {BorderHighlightDirective} from './directives/border-highlight.directive';
 import {DateTimeUtility} from './shared/date-time.utility';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {DraggableDirective} from './directives/draggable.directive';
 
 
 @NgModule({
@@ -26,11 +28,13 @@ import {DateTimeUtility} from './shared/date-time.utility';
     FooterComponent,
     TaskEditComponent,
     TaskEditComponent,
-    BorderHighlightDirective
+    BorderHighlightDirective,
+    DraggableDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    NgbModule
   ],
   providers: [DateTimeUtility],
   bootstrap: [AppComponent],

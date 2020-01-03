@@ -17,18 +17,19 @@ import * as moment from 'moment';
 
 
   dateString;
-  displayedDate;
+  dayString;
 
   constructor(private taskService: TaskService) {}
 
   ngOnInit() {
     const dateTimeUtility = new DateTimeUtility();
 
-    console.log(now);
 
-    this.tasks = moment(this.taskService.taskArray[0].date).format('LL') === moment(new Date()).format('LL') ? this.taskService.taskArray : [];
+    this.tasks = moment(this.taskService.taskArray[0].date).format('LL') === moment().format('LL') ? this.taskService.taskArray : [];
 
-    this.dateString = dateTimeUtility.getFormatedDateString(this.tasks[0].date);
+    this.dateString = this.tasks === [] ? moment().format('LL') : this.tasks[0].date.format('LL');
+    this.dayString = this.tasks === [] ? moment().format('dddd') : this.tasks[0].date.format('dddd');
+
 
   }
 
