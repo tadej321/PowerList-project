@@ -14,6 +14,7 @@ import {BorderHighlightDirective} from './directives/border-highlight.directive'
 import {DateTimeUtility} from './shared/date-time.utility';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DraggableDirective} from './directives/draggable.directive';
+import {MovableDirective} from './directives/movable.directive';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {DraggableDirective} from './directives/draggable.directive';
     TaskEditComponent,
     TaskEditComponent,
     BorderHighlightDirective,
-    DraggableDirective
+    DraggableDirective,
+    MovableDirective
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import {DraggableDirective} from './directives/draggable.directive';
   ],
   providers: [DateTimeUtility],
   bootstrap: [AppComponent],
+  exports: [DraggableDirective, MovableDirective]
 
 })
 

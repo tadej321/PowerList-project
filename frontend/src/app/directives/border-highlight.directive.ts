@@ -20,4 +20,14 @@ export class BorderHighlightDirective implements OnInit {
     // this.renderer.setStyle(this.elRef.nativeElement, 'border', 'none');
     this.border = '1px solid #D3D3D3';
   }
+
+  @HostListener('dragStart') onDragStart() {
+    this.border = '1px solid #ff0000';
+  }
+  @HostListener('dragMove') onDragMove() {
+    this.border = '1px solid #ff0000';
+  }
+  @HostListener('dragEnd') onDragStop() {
+    this.border = '1px solid #D3D3D3';
+  }
 }

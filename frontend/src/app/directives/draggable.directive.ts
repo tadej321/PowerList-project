@@ -1,58 +1,81 @@
-import {Directive, ElementRef, EventEmitter, HostListener, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import { map, mergeMap, takeUntil } from 'rxjs/operators';
+import {Directive, EventEmitter, HostBinding, HostListener, OnInit, Output} from '@angular/core';
 
 @Directive ({
   selector: '[appDraggable]'
 })
-export class DraggableDirective implements OnInit {
-  mouseup = new EventEmitter<MouseEvent>();
-  mousedown = new EventEmitter<MouseEvent>();
-  mousemove = new EventEmitter<MouseEvent>();
+export class DraggableDirective {
+  @HostBinding('class.draggable') draggable = true;
 
-  mousedrag: Observable<{top, left}>;
+  // to trigger pointer-events polyfill
+  @HostBinding('attr.touch-action') touchAction = 'none';
 
-  @HostListener('document:mouseup', ['$event'])
-  onMouseup(event: MouseEvent) {
-    this.mouseup.emit(event);
+  @Output() dragStart = new EventEmitter<PointerEvent>();
+  @Output() dragMove = new EventEmitter<PointerEvent>();
+  @Output() dragEnd = new EventEmitter<PointerEvent>();
+
+  @HostBinding('class.dragging') dragging = false;
+
+  @HostListener('pointerdown', ['$event'])
+  onPointerDown(event: PointerEvent): void {
+    this.dragging = true;
+    this.dragStart.emit(event);
   }
 
-  @HostListener('mousedown', ['$event'])
-  onMousedown(event: MouseEvent) {
-    this.mousedown.emit(event);
-    return false;
+  @HostListener('document:pointermove', ['$event'])
+  onPointerMove(event: PointerEvent): void {
+    if (!this.dragging) {
+      return;
+    }
+
+    this.dragMove.emit(event);
   }
 
-  @HostListener('document:mousemove', ['$event'])
-  onMousemove(event: MouseEvent) {
-    this.mousemove.emit(event);
-  }
+  @HostListener('document:pointerup', ['$event'])
+  onPointerUp(event: PointerEvent): void {
+    if (!this.dragging) {
+      return;
+    }
 
-  constructor(public elRef: ElementRef) {
-    this.elRef.nativeElement.style.position = 'relative';
-    this.elRef.nativeElement.style.cursor = 'pointer';
-
-    this.mousedrag = this.mousedown.pipe(map(event => {
-      return {
-        top: event.clientY - this.elRef.nativeElement.getBoundingClientRect().top,
-        left: event.clientX - this.elRef.nativeElement.getBoundingClientRect().left
-      };
-    }))
-      // .pipe(mergeMap(
-      //   imageOffset => this.mousemove.pipe(map(pos => ({
-      //     top: pos.clientY - imageOffset.top,
-      //     left: pos.clientX - imageOffset.left,
-      //   })))
-          .pipe(takeUntil(this.mouseup));
-      // ));
+    this.dragging = false;
+    this.dragEnd.emit(event);
   }
-  ngOnInit() {
-    this.mousedrag.subscribe({
-      next: pos => {
-        this.elRef.nativeElement.style.top = pos.top + 'px';
-        this.elRef.nativeElement.style.left = pos.left + 'px';
-      }
-    });
-  }
-
+  // @HostBinding('class.draggable') draggable = true;
+  //
+  // @Output() dragStart = new EventEmitter<PointerEvent>();
+  // @Output() dragMove = new EventEmitter<PointerEvent>();
+  // @Output() dragEnd = new EventEmitter<PointerEvent>();
+  //
+  // pointerDown = new Subject<PointerEvent>();
+  // private pointerMove = new Subject<PointerEvent>();
+  // private pointerUp = new Subject<PointerEvent>();
+  //
+  // @HostListener('pointerdown', ['$event'])
+  // onPointerDown(event: PointerEvent): void {
+  //   this.pointerDown.next(event);
+  // }
+  //
+  // @HostListener('document:pointermove', ['$event'])
+  // onPointerMove(event: PointerEvent): void {
+  //   this.pointerMove.next(event);
+  // }
+  //
+  // @HostListener('document:pointerup', ['$event'])
+  // onPointerUp(event: PointerEvent): void {
+  //   this.pointerUp.next(event);
+  // }
+  //
+  // ngOnInit(): void {
+  //   // Start streaming dragStart
+  //   this.pointerDown.asObservable().subscribe(event => this.dragStart.emit(event));
+  //
+  //   // Start streaming dragMove
+  //   this.pointerDown.pipe(
+  //     switchMap(() => this.pointerMove.pipe(takeUntil(this.pointerUp))),
+  //   ).subscribe(event => this.dragMove.emit(event));
+  //
+  //   // Start streaming dragEnd
+  //   this.pointerDown.pipe(
+  //     switchMap(() => this.pointerUp.pipe(take(1)))
+  //   ).subscribe(event => this.dragEnd.emit(event));
+  // }
 }
