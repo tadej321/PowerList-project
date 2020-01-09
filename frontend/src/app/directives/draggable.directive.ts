@@ -1,10 +1,13 @@
 import {Directive, EventEmitter, HostBinding, HostListener, OnInit, Output} from '@angular/core';
+import {Subject} from 'rxjs';
+import {switchMap, take, takeUntil} from 'rxjs/operators';
 
 @Directive ({
   selector: '[appDraggable]'
 })
 export class DraggableDirective {
   @HostBinding('class.draggable') draggable = true;
+  @HostBinding('class.dragging') dragging = false;
 
   // to trigger pointer-events polyfill
   @HostBinding('attr.touch-action') touchAction = 'none';
@@ -13,11 +16,11 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
-  @HostBinding('class.dragging') dragging = false;
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(event: PointerEvent): void {
     this.dragging = true;
+    event.stopPropagation();
     this.dragStart.emit(event);
   }
 
@@ -39,6 +42,8 @@ export class DraggableDirective {
     this.dragging = false;
     this.dragEnd.emit(event);
   }
+
+
   // @HostBinding('class.draggable') draggable = true;
   //
   // @Output() dragStart = new EventEmitter<PointerEvent>();
