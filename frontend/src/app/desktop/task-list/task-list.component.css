@@ -1,4 +1,18 @@
 li {
   margin: 10px 0;
   height: 80px;
+
+}
+
+/*li.dragging {*/
+/*  display: none;*/
+/*}*/
+
+.task-content.dragging {
+  display: none;
+}
+
+.helper {
+  height: 95px;
+  width: 540px;
 }

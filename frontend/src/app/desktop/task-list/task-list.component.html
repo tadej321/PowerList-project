@@ -1,4 +1,4 @@
-<div class="container-fluid" appMovableAreaDirective>
+<div class="container-fluid" appMovableArea>
   <!-- Date information -->
   <div style="padding: 40px">
     <h3>{{dayString}}</h3>
@@ -9,10 +9,10 @@
     <button style="width: 20%; height: 30px;" (click)="onAddTask()">Add</button>
   </div>
   <!-- List of Tasks -->
-  <div class="col-md-10" style="padding-left: 70px; background-color: #BEBEBE" appMovableDirective>
-    <ul class="list-group">
+  <div class="col-md-10" style="padding-left: 70px; background-color: #BEBEBE" appMovable >
+    <ul class="list-group" appSortableList (sort)="sort($event)">
       <!-- Individual task item -->
-      <li class="list-group-item"  *ngFor="let task of tasks" style=" padding: 0;" appBorderHighlight appMovableDirective>
+      <li class="list-group-item"  *ngFor="let task of tasks" style="padding: 0;" appSortable appBorderHighlight>
         <div>
           <!-- edit task component -->
           <!-- If not using services, add "(taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: task.count})"" to the <app-task-edit> tag -->
@@ -26,10 +26,19 @@
           <app-task-item
             *ngIf="!task.edit"
             [task]="task"
+            [index]="tasks.indexOf(task)"
 
           ></app-task-item>
         </div>
+        <div *ngIf="!task.edit" style="padding: 0; margin: 0;">
+          <div class="list-group-item helper" style="padding: 0;" *appDraggableHelper>
+            <app-task-item
+              [task]="task"
+            ></app-task-item>
+          </div>
+        </div>
       </li>
+
     </ul>
   </div>
   <!-- Footer component -->

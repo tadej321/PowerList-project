@@ -3,6 +3,7 @@ import { TaskModel } from './task-item/task.model';
 import {TaskService} from './task.service';
 import {DateTimeUtility} from '../../shared/date-time.utility';
 import * as moment from 'moment';
+import {SortEvent} from "../../directives/sortable-list.directive";
 
 
 
@@ -35,5 +36,13 @@ import * as moment from 'moment';
 
   onAddTask() {
     this.taskService.addTask();
+  }
+
+  sort(event: SortEvent) {
+    const current = this.tasks[event.currentIndex];
+    const swapWith = this.tasks[event.newIndex];
+
+    this.tasks[event.newIndex] = current;
+    this.tasks[event.currentIndex] = swapWith;
   }
 }

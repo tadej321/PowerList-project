@@ -16,6 +16,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DraggableDirective} from './directives/draggable.directive';
 import {MovableDirective} from './directives/movable.directive';
 import {MovableAreaDirective} from './directives/movable-area.directive';
+import { DraggableHelperDirective } from './directives/draggable-helper.directive';
+import {OverlayModule} from '@angular/cdk/overlay';
+import {SortableListDirective} from './directives/sortable-list.directive';
+import { SortableDirective } from './directives/sortable.directive';
 
 
 @NgModule({
@@ -33,16 +37,27 @@ import {MovableAreaDirective} from './directives/movable-area.directive';
     BorderHighlightDirective,
     DraggableDirective,
     MovableDirective,
-    MovableAreaDirective
+    MovableAreaDirective,
+    DraggableHelperDirective,
+    SortableListDirective,
+    SortableDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    OverlayModule
   ],
   providers: [DateTimeUtility],
   bootstrap: [AppComponent],
-  exports: [DraggableDirective, MovableDirective, MovableAreaDirective]
+  exports: [
+    DraggableDirective,
+    MovableDirective,
+    MovableAreaDirective,
+    DraggableHelperDirective,
+    SortableListDirective,
+    SortableDirective
+  ]
 
 })
 

@@ -1,6 +1,12 @@
-import {Directive, EventEmitter, HostBinding, HostListener, OnInit, Output} from '@angular/core';
-import {Subject} from 'rxjs';
-import {switchMap, take, takeUntil} from 'rxjs/operators';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Output,
+} from '@angular/core';
+
 
 @Directive ({
   selector: '[appDraggable]'
@@ -16,9 +22,13 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
+  constructor(public element: ElementRef) {
+
+  }
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(event: PointerEvent): void {
+    console.log("OK");
     this.dragging = true;
     event.stopPropagation();
     this.dragStart.emit(event);

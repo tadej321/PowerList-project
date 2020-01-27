@@ -1,5 +1,7 @@
 /* You canadd global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~@angular/cdk/overlay-prebuilt.css";
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .draggable {
@@ -9,5 +11,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .movable:not(.dragging) {
   transition: transform 200ms ease-in-out;
+}
+
+.box {
+  background: #BADA55;
+  border: 1px solid black;
+  padding: 10px 20px;
+  display: inline-block;
+
+}
+.box.dragging {
+  background: none;
+  border: 1px dashed black;
+  color: transparent;
 }
 

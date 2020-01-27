@@ -10,6 +10,7 @@ import {TaskModel} from './task.model';
 
 export class TaskItemComponent implements OnInit {
   @Input() task: TaskModel;
+  @Input() index: number;
   // @Output() editedTask = new EventEmitter<{editedTaskCount: number, action: string}>();
   constructor(private taskService: TaskService) {}
 
@@ -18,6 +19,7 @@ export class TaskItemComponent implements OnInit {
 
   // Emit the count of the task to be edited.
   onTaskEdit() {
+    console.log("editing");
     this.taskService.editTask(this.task.id);
     // USED WITH EventEmitter!!
     // this.editedTask.emit({
