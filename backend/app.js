@@ -12,7 +12,7 @@ const app = express();
 
 const url = 'mongodb://localhost/PowerList';
 
-db.connect(process.env.DB_URI)
+db.connect(process.env.DB_URI || url)
     .then(() => {
         console.log("Connected to database");
     })

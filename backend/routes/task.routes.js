@@ -5,21 +5,21 @@ const checkAuth = require('../middleware/authenticate');
 
 const taskController = require('../controllers/task.controllers');
 
-router.post("",
+router.post('',
     // checkAuth,
     taskController.post
 );
-router.put("/:id",
+router.put('',
     // checkAuth,
     taskController.put
 );
-router.get("",
+router.get('',
     taskController.get
 );
-router.get("/:id",
-    taskController.getById
+router.get('/:date',
+    taskController.getByDate
 );
-router.delete("/:id",
+router.delete('/:id',
     // checkAuth,
     taskController.deleteById
 );

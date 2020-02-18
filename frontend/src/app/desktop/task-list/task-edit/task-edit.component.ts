@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskService} from '../task.service';
+import {TaskModel} from "../task.model";
 
 @Component({
   selector: 'app-task-edit',
@@ -9,7 +10,8 @@ import {TaskService} from '../task.service';
 export class TaskEditComponent implements OnInit {
   // @Output() taskSaved = new EventEmitter<{taskDescription: string}>();
   @Input() taskCount: number;
-  constructor(private taskService: TaskService) {}
+  @Input() task: TaskModel;
+  constructor(public taskService: TaskService) {}
 
   ngOnInit() {
   }
@@ -17,9 +19,12 @@ export class TaskEditComponent implements OnInit {
 
   // Emit the changes of the edited task.
   onSaveTask(descriptionInput: HTMLInputElement) {
-    this.taskService.saveTask(descriptionInput.value, this.taskCount);
-    // this.taskSaved.emit({
-    //   taskDescription: descriptionInput.value
-    // });
+    const task: TaskModel = {
+      id: this.task.id,
+      description: descriptionInput.value,
+      completion: this.task.completion,
+      date: this.task.date
+    };
+    this.taskService.updateTask(task);
   }
 }

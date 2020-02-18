@@ -20,6 +20,8 @@ import { DraggableHelperDirective } from './directives/draggable-helper.directiv
 import {OverlayModule} from '@angular/cdk/overlay';
 import {SortableListDirective} from './directives/sortable-list.directive';
 import { SortableDirective } from './directives/sortable.directive';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { SortableDirective } from './directives/sortable.directive';
     BrowserModule,
     FormsModule,
     NgbModule,
-    OverlayModule
+    OverlayModule,
+    HttpClientModule,
+    RouterModule
   ],
   providers: [DateTimeUtility],
   bootstrap: [AppComponent],

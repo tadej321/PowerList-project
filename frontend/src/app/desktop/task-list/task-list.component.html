@@ -18,13 +18,14 @@
           <!-- If not using services, add "(taskSaved)="onTaskSaved({newDescription: $event.taskDescription, count: task.count})"" to the <app-task-edit> tag -->
           <app-task-edit
             *ngIf="task.edit"
-            [taskCount]="task.id"
+            [task]="task"
+            [taskCount]="tasks.indexOf(task)"
 
           ></app-task-edit>
           <!-- Task item component -->
           <!-- If not using services, add "(editedTask)="onTaskEdited($event)"" to the <app-task-item> tag -->
           <app-task-item
-            *ngIf="!task.edit"
+            *ngIf="!task.edit || task.edit === undefined"
             [task]="task"
             [index]="tasks.indexOf(task)"
 
@@ -34,10 +35,12 @@
           <div class="list-group-item helper" style="padding: 0;" *appDraggableHelper>
             <app-task-item
               [task]="task"
+              [index]="tasks.indexOf(task)"
             ></app-task-item>
           </div>
         </div>
       </li>
+      <li class="task-substitute"></li>
 
     </ul>
   </div>

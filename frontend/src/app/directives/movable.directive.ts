@@ -26,14 +26,14 @@ export class MovableDirective extends DraggableDirective {
   private startPosition: Position = {x: 0, y: 0};
 
   constructor(private sanitizer: DomSanitizer, public element: ElementRef) {
-    super();
+    super(element);
   }
 
   @HostListener('dragStart', ['$event'])
   onDragStart(event: PointerEvent) {
     this.startPosition = {
-      x: event.clientX - this.position.x,
-      y: event.clientY - this.position.y
+      x: event.clientX,
+      y: event.clientY
     };
   }
 

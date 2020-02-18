@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {TaskService} from '../task.service';
-import {TaskModel} from './task.model';
+import {TaskModel} from '../task.model';
 
 @Component({
   selector: 'app-task-item',
@@ -11,34 +11,31 @@ import {TaskModel} from './task.model';
 export class TaskItemComponent implements OnInit {
   @Input() task: TaskModel;
   @Input() index: number;
-  // @Output() editedTask = new EventEmitter<{editedTaskCount: number, action: string}>();
-  constructor(private taskService: TaskService) {}
+  constructor(public taskService: TaskService) {
+  }
 
   ngOnInit() {
   }
 
-  // Emit the count of the task to be edited.
+  // Call change to edit mode method
   onTaskEdit() {
-    console.log("editing");
+    console.log(this.task.id);
     this.taskService.editTask(this.task.id);
-    // USED WITH EventEmitter!!
-    // this.editedTask.emit({
-    //   editedTaskCount: this.task.count
-    // });
-  }
-  // Emit the count of the task to be removed
-  onTaskRemove() {
-    this.taskService.removeTask(this.task.id);
-    // this.remove.emit({
-    //   editedTaskCount: this.task.count
-    // });
   }
 
+  // Call remove task method
+  onTaskRemove() {
+    this.taskService.removeTask(this.task.id);
+  }
+
+  // Call update task method
   onCheckboxChange() {
-    this.taskService.changeCheckboxState(this.task.id);
-    // this.changeCheckboxState.emit({
-    //   editedTaskCount: this.task.count,
-    //   action: 'check'
-    // });
+    const task: TaskModel = {
+      id: this.task.id,
+      description: this.task.description,
+      completion: !this.task.completion,
+      date: this.task.date
+    };
+    this.taskService.updateTask(task);
   }
 }

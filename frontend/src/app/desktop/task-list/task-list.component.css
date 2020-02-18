@@ -8,11 +8,24 @@ li {
 /*  display: none;*/
 /*}*/
 
+.task-substitute {
+  display: none;
+}
+
+.task-substitute.dragging {
+  display: list-item;
+  margin: 10px 0;
+  width: 520px;
+  height: 80px;
+}
+
 .task-content.dragging {
   display: none;
 }
 
+
+
 .helper {
-  height: 95px;
-  width: 540px;
+  height: 80px;
+  width: 520px;
 }

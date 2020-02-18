@@ -1,51 +1,126 @@
 import * as moment from 'moment';
+import {TaskModel} from './task.model';
+import {HttpClient} from '@angular/common/http';
+import {RouterModule} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {map} from "rxjs/operators";
+import {Subject} from "rxjs";
+
 const now = moment();
+@Injectable({providedIn: 'root'})
 export class TaskService {
-  taskArray = [
-    {description: '45 minute workout', completion: false, id: 1, edit: false, date: now},
-    {description: 'Wake up at 5:00am', completion: false, id: 2, edit: false, date: now},
-    {description: 'read 10 pages', completion: false, id: 3, edit: false, date: now},
-    {description: 'drink 1 gallon of water', completion: false, id: 4, edit: false, date: now}
-  ];
+
+  private tasks: TaskModel[] = [];
+  private tasksUpdated = new Subject<{tasks: TaskModel[]}>();
+
+  constructor(private http: HttpClient, private router: RouterModule) {}
+
+  getTasksOfDay(date: string) {
+    this.http.get<{message: string, tasks: any}>(
+      'http://localhost:3100/api/task/'  + date
+    )
+      .pipe(map((taskData) => {
+        return { tasks: taskData.tasks.map(task => {
+          return {
+            id: task._id,
+            description: task.description,
+            date: task.date,
+            completion: task.completion,
+            edit: false
+          };
+          })};
+    }))
+      .subscribe((transformedTaskData) => {
+        this.tasks = transformedTaskData.tasks;
+        this.tasksUpdated.next({tasks: [...this.tasks]});
+      });
+  }
+
+  getTaskUpdatedListener() {
+    return this.tasksUpdated.asObservable();
+  }
 
 // Save changes of an edited task to the array
-  saveTask(newDescription: string, id: number) {
+  updateTask(updatedTask: TaskModel) {
+    const taskData: TaskModel = {
+      id: updatedTask.id,
+      description: updatedTask.description,
+      completion: updatedTask.completion,
+      date: updatedTask.date
+    };
+    console.log(taskData);
     // Leave the current description if new wasn't provided
-    if (newDescription !== '') {
-      this.taskArray[id - 1].description = newDescription;
+    if (updatedTask.description !== '') {
+      this.http.put('http://localhost:3100/api/task', taskData)
+        .subscribe(response => {
+          const updatedTasks = [...this.tasks];
+          const oldTaskIndex = updatedTasks.findIndex(i => i.id === updatedTask.id);
+          updatedTasks[oldTaskIndex] = {
+            id: updatedTask.id,
+            description: updatedTask.description,
+            completion: updatedTask.completion,
+            date: updatedTask.date,
+            edit: false
+          };
+          this.tasks = updatedTasks;
+          this.tasksUpdated.next({tasks: [...this.tasks]});
+        });
+    } else {
+      const updatedTasks = [...this.tasks];
+      const oldTaskIndex = updatedTasks.findIndex(i => i.id === updatedTask.id);
+      updatedTasks[oldTaskIndex].edit = false;
+      this.tasks = updatedTasks;
+      this.tasksUpdated.next({tasks: [...this.tasks]});
     }
-    this.taskArray[id - 1].edit = false;
   }
 
 // Change to edit mode of an task item
-  editTask(editedTaskId: number) {
-      this.taskArray[editedTaskId - 1].edit = true;
+  editTask(editedTaskId: string) {
+    const updatedTasks = [...this.tasks];
+    const taskIndex = updatedTasks.findIndex(i => i.id === editedTaskId);
+    updatedTasks[taskIndex].edit = true;
+    this.tasks = updatedTasks;
+    this.tasksUpdated.next({tasks: [...this.tasks]});
   }
 
 // Change the state of the checkbox to checked or to unchecked.
-  changeCheckboxState(editedTaskCount: number) {
-    this.taskArray[editedTaskCount - 1].completion = !this.taskArray[editedTaskCount - 1].completion;
-  }
 
 // Remove the task from the array.
-  removeTask(taskId: number) {
-    this.taskArray.splice(taskId - 1, 1);
+  removeTask(id: string) {
+    this.http.delete<{message: string}>('http://localhost:3100/api/task/' + id)
+    .subscribe(response => {
+      const updatedTasks = [...this.tasks];
+      const taskIndex = updatedTasks.findIndex(i => i.id === id);
+      updatedTasks.splice(taskIndex, 1);
+      this.tasks = updatedTasks;
+      this.tasksUpdated.next({tasks: [...this.tasks]});
+    });
 
-    let id = 1;
-    for (const task of this.taskArray) {
-      task.id = id;
-      id ++;
-    }
+
   }
 
 // Add a new task to the array
   addTask() {
-    this.taskArray.push({
+    const taskData = {
       description: '',
       completion: false,
-      id: this.taskArray.length + 1,
-      edit: true,
-      date: moment()
+      date: moment().format('YYYY-MM-DD')
+    };
+
+    this.http.post<{message: string, task: TaskModel}>(
+      'http://localhost:3100/api/task',
+      taskData
+    ).subscribe((response) => {
+      const task: TaskModel = {
+        id: response.task.id,
+        description: '',
+        completion: false,
+        edit: true,
+        date: response.task.date
+      };
+      this.tasks.push(task);
+
+      this.tasksUpdated.next({tasks: [...this.tasks]});
     });
   }
 

@@ -28,7 +28,7 @@ export class DraggableDirective {
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(event: PointerEvent): void {
-    console.log("OK");
+    console.log(event.clientY);
     this.dragging = true;
     event.stopPropagation();
     this.dragStart.emit(event);

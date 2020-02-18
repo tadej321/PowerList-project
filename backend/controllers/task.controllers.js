@@ -5,6 +5,7 @@ exports.post = (req, res, next) => {
     const task = new Task({
         description: req.body.description,
         completion: req.body.completion,
+        date: req.body.date
         // creator: req.userData.userId
     });
     task.save()
@@ -27,14 +28,14 @@ exports.post = (req, res, next) => {
 // Update an existing task with new data.
 exports.put = (req, res, next) => {
     const task = new Task({
-        _id: req.params.id,
+        _id: req.body.id,
         description: req.body.description,
         completion: req.body.completion,
         // creator: req.userData.userId
     });
     Task.updateOne(
         {
-            _id: req.params.id,
+            _id: req.body.id,
             // creator: req.userData.userId
         },
         task
@@ -55,10 +56,10 @@ exports.put = (req, res, next) => {
 exports.get = (req, res, next) => {
     const taskQuery = Task.find();
     taskQuery
-        .then(documents => {
+        .then(tasks => {
             res.status(200).json({
                 message: "Tasks fetched successfully",
-                documents
+                tasks
             });
         })
         .catch(error => {
@@ -88,13 +89,29 @@ exports.getById = (req, res, next) => {
     });
 };
 
+// Get tasks by date
+exports.getByDate = (req, res, next) => {
+    Task.find({date: req.params.date})
+        .then(tasks => {
+            if (tasks) {
+                res.status(200).json({
+                    message: "Tasks fetched successfully",
+                    tasks
+                });
+            } else {
+                res.status(404).json({ message: "Tasks not found"})
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Fetching tasks failed"
+            });
+        });
+};
+
 // Delete one task by its id.
 exports.deleteById = (req, res, next) => {
-    Task.deleteOne(
-        {
-            _id: req.params.id,
-            // creator: req.userData.userId
-        }
+    Task.deleteOne({_id: req.params.id}
     )
     .then(() => {
         res.status(200).json({ message: "Deletion successful"});
