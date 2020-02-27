@@ -5,6 +5,9 @@ import {RouterModule} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {environment} from "../../../environments/environment";
+
+const BACKEND_URL = environment.apiUrl + '/task';
 
 const now = moment();
 @Injectable({providedIn: 'root'})
@@ -17,7 +20,7 @@ export class TaskService {
 
   getTasksOfDay(date: string) {
     this.http.get<{message: string, tasks: any}>(
-      'http://localhost:3100/api/task/'  + date
+      BACKEND_URL + '/' + date
     )
       .pipe(map((taskData) => {
         return { tasks: taskData.tasks.map(task => {
@@ -51,7 +54,7 @@ export class TaskService {
     console.log(taskData);
     // Leave the current description if new wasn't provided
     if (updatedTask.description !== '') {
-      this.http.put('http://localhost:3100/api/task', taskData)
+      this.http.put(BACKEND_URL, taskData)
         .subscribe(response => {
           const updatedTasks = [...this.tasks];
           const oldTaskIndex = updatedTasks.findIndex(i => i.id === updatedTask.id);
@@ -87,7 +90,7 @@ export class TaskService {
 
 // Remove the task from the array.
   removeTask(id: string) {
-    this.http.delete<{message: string}>('http://localhost:3100/api/task/' + id)
+    this.http.delete<{message: string}>(BACKEND_URL + id)
     .subscribe(response => {
       const updatedTasks = [...this.tasks];
       const taskIndex = updatedTasks.findIndex(i => i.id === id);
@@ -108,7 +111,7 @@ export class TaskService {
     };
 
     this.http.post<{message: string, task: TaskModel}>(
-      'http://localhost:3100/api/task',
+      BACKEND_URL,
       taskData
     ).subscribe((response) => {
       const task: TaskModel = {

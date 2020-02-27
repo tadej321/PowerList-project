@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 
 // Require jwt for creating auth tokens.
 const jwt = require('jsonwebtoken');
-
 const User = require('../db/models/user.model');
 
 // Create a new user
@@ -64,6 +63,8 @@ exports.userLogin = (req, res, next) => {
             });
         })
         .catch(err => {
+            console.log("OK");
+            console.log(err);
             res.status(401).json({
                 message: "Invalid authentication credentials"
             });

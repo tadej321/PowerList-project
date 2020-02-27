@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "latest",
     "debug": "latest",
+    "dotenv": "^8.2.0",
     "express": "latest",
     "jsonwebtoken": "^8.5.1",
     "mockgoose": "^8.0.4",
