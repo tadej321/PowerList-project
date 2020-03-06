@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostBinding, HostListener} from '@angular/core';
+import {Directive, ElementRef, HostBinding, HostListener, Input} from '@angular/core';
 import {DraggableDirective} from './draggable.directive';
 import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 
@@ -19,11 +19,11 @@ export class MovableDirective extends DraggableDirective {
 
   @HostBinding('class.movable') movable = true;
 
-  public position: Position = {x: 0, y: 0};
+  position: Position = {x: 0, y: 0};
 
-  private reset = true;
+  private startPosition: Position;
 
-  private startPosition: Position = {x: 0, y: 0};
+  @Input('appMovableReset') reset = false;
 
   constructor(private sanitizer: DomSanitizer, public element: ElementRef) {
     super(element);
@@ -32,19 +32,20 @@ export class MovableDirective extends DraggableDirective {
   @HostListener('dragStart', ['$event'])
   onDragStart(event: PointerEvent) {
     this.startPosition = {
-      x: event.clientX,
-      y: event.clientY
+      x: event.clientX - this.position.x,
+      y: event.clientY - this.position.y
     };
   }
 
   @HostListener('dragMove', ['$event'])
   onDragMove(event: PointerEvent) {
+    console.log("OK");
     this.position.x = event.clientX - this.startPosition.x;
     this.position.y = event.clientY - this.startPosition.y;
   }
 
   @HostListener('dragEnd', ['$event'])
-  onDragStop(event: PointerEvent) {
+  onDragEnd(event: PointerEvent) {
     if (this.reset) {
       this.position = {x: 0, y: 0};
     }

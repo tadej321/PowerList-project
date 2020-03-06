@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {NavigationEnd, Router, RouterEvent} from "@angular/router";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-desktop',
@@ -7,7 +9,12 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class DesktopComponent implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
+
   ngOnInit() {
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd)
+    ).subscribe(() => {
+    });
   }
 }

@@ -8,6 +8,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AuthInterceptor} from './authentication/auth-interceptor';
 import {AuthGuard} from './authentication/auth-guard';
 import {DesktopModule} from './desktop/desktop.module';
+import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {DesktopModule} from './desktop/desktop.module';
     DesktopModule,
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbDropdownModule
   ],
   providers: [
     AuthGuard,

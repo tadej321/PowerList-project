@@ -11,8 +11,10 @@ exports.createUser = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
-               email: req.body.email,
-               password: hash
+                name: req.body.name,
+                surname: req.body.surname,
+                email: req.body.email,
+                password: hash
             });
         user.save()
             .then(result => {
@@ -23,7 +25,7 @@ exports.createUser = (req, res, next) => {
             })
             .catch(err => {
                 res.status(500).json({
-                    message: ""
+                    message: "Email already in use"
                 });
             });
         });
@@ -59,7 +61,11 @@ exports.userLogin = (req, res, next) => {
             res.status(200).json({
                 token: token,
                 expiresIn: 3600,
-                userId: fetchedUser._id
+                userCredentials: {
+                    userId: fetchedUser._id,
+                    name: fetchedUser.name,
+                    surname: fetchedUser.surname
+                }
             });
         })
         .catch(err => {

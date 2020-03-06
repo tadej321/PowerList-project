@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService} from "../../authentication/auth.service";
+import {Subscription} from "rxjs";
 
 @Component ({
   selector: 'app-main-menu',
@@ -7,9 +9,17 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class MainMenuComponent implements OnInit {
-  constructor() {}
+
+  private authStatusSub: Subscription;
+  private name;
+  private surname;
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    // this.name = this.authService.getUserCredentials().name;
+    // this.surname = this.authService.getUserCredentials().surname;
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe();
   }
 
 }

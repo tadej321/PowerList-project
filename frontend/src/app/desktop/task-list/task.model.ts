@@ -6,4 +6,5 @@ export interface TaskModel {
   completion: boolean;
   date: string;
   edit?: boolean;
+  index: number;
 }

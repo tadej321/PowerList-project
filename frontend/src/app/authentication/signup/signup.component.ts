@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {AuthService} from "../auth.service";
-import {Subscription} from "rxjs";
-import {NgForm} from "@angular/forms";
+import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Observable, Subscription} from 'rxjs';
+import {NgForm, NgModelGroup} from '@angular/forms';
 
 @Component({
   templateUrl: './signup.component.html',
@@ -10,6 +10,8 @@ import {NgForm} from "@angular/forms";
 
 export class SignupComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
+  private passwordMismatch = false;
+  private emailTaken = false;
 
   constructor(public authService: AuthService) {}
 
@@ -21,11 +23,34 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe();
   }
 
-  onSignup(form: NgForm) {
+  onSignup(form: NgForm, event) {
+
+    // Object.keys(form.controls).forEach((key: string) => {
+    //   const abstractControl = form.form.get(key);
+    //   console.log(abstractControl);
+    // });
+    this.passwordMismatch = false;
+    this.emailTaken = false;
     if (form.invalid) {
+      console.log("REQ");
+      event.preventDefault();
       return;
     }
-    this.authService.createUser(form.value.email, form.value.password);
+    if (form.value.repeatPassword !== form.value.password) {
+      this.passwordMismatch = true;
+      return;
+    }
+
+    const userCredentials = {
+      name: form.value.name,
+      surname: form.value.surname,
+      email: form.value.email,
+      password: form.value.password
+    };
+
+    this.authService.createUser(userCredentials).catch(e => {
+      this.emailTaken = true;
+    });
   }
 
 }

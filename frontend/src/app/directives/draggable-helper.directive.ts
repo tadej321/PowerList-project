@@ -11,12 +11,6 @@ export class DraggableHelperDirective implements OnInit, OnDestroy {
   private overlayRef: OverlayRef;
   private positionStrategy = new GlobalPositionStrategy();
   private startPosition?: { x: number; y: number };
-  public helperRectProps;
-
-  @Output() helperMove = new EventEmitter<GlobalPositionStrategy>();
-
-  // parentElement = this.draggable.element.nativeElement.parentElement;
-
 
   constructor(private draggable: DraggableDirective,
               private templateRef: TemplateRef<any>,
@@ -40,8 +34,6 @@ export class DraggableHelperDirective implements OnInit, OnDestroy {
   }
 
   onDragStart(event: PointerEvent): void {
-    // const siblingOfDraggable = this.parentElement.parentElement.querySelector()
-
     // determine relative start position
     const clientRect = this.draggable.element.nativeElement.getBoundingClientRect();
     this.startPosition = {
@@ -59,8 +51,6 @@ export class DraggableHelperDirective implements OnInit, OnDestroy {
     this.positionStrategy.left(`${event.clientX - this.startPosition.x}px`);
     this.positionStrategy.top(`${event.clientY - this.startPosition.y}px`);
     this.positionStrategy.apply();
-    this.helperRectProps = this.positionStrategy;
-    this.helperMove.emit(this.helperRectProps);
   }
 
   onDragEnd(): void {

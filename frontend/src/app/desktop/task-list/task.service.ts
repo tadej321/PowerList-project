@@ -7,7 +7,8 @@ import {map} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {environment} from "../../../environments/environment";
 
-const BACKEND_URL = environment.apiUrl + '/task';
+const BACKEND_URL = environment.apiUrl + '/task/';
+const BACKEND_USER_URL = environment.apiUrl + '/user/';
 
 const now = moment();
 @Injectable({providedIn: 'root'})
@@ -16,11 +17,13 @@ export class TaskService {
   private tasks: TaskModel[] = [];
   private tasksUpdated = new Subject<{tasks: TaskModel[]}>();
 
+
+
   constructor(private http: HttpClient, private router: RouterModule) {}
 
   getTasksOfDay(date: string) {
     this.http.get<{message: string, tasks: any}>(
-      BACKEND_URL + '/' + date
+      BACKEND_URL + date
     )
       .pipe(map((taskData) => {
         return { tasks: taskData.tasks.map(task => {
@@ -29,12 +32,13 @@ export class TaskService {
             description: task.description,
             date: task.date,
             completion: task.completion,
-            edit: false
+            edit: false,
+            index: task.index
           };
           })};
     }))
       .subscribe((transformedTaskData) => {
-        this.tasks = transformedTaskData.tasks;
+        this.tasks = transformedTaskData.tasks.sort((a, b) => (a.index > b.index) ? 1 : -1);
         this.tasksUpdated.next({tasks: [...this.tasks]});
       });
   }
@@ -49,7 +53,8 @@ export class TaskService {
       id: updatedTask.id,
       description: updatedTask.description,
       completion: updatedTask.completion,
-      date: updatedTask.date
+      date: updatedTask.date,
+      index: updatedTask.index
     };
     console.log(taskData);
     // Leave the current description if new wasn't provided
@@ -63,7 +68,8 @@ export class TaskService {
             description: updatedTask.description,
             completion: updatedTask.completion,
             date: updatedTask.date,
-            edit: false
+            edit: false,
+            index:  updatedTask.index
           };
           this.tasks = updatedTasks;
           this.tasksUpdated.next({tasks: [...this.tasks]});
@@ -95,6 +101,11 @@ export class TaskService {
       const updatedTasks = [...this.tasks];
       const taskIndex = updatedTasks.findIndex(i => i.id === id);
       updatedTasks.splice(taskIndex, 1);
+
+      for (let i = 0; i < updatedTasks.length; i++) {
+        updatedTasks[i].index = i;
+      }
+      console.log(updatedTasks);
       this.tasks = updatedTasks;
       this.tasksUpdated.next({tasks: [...this.tasks]});
     });
@@ -107,9 +118,10 @@ export class TaskService {
     const taskData = {
       description: '',
       completion: false,
-      date: moment().format('YYYY-MM-DD')
+      date: moment().format('YYYY-MM-DD'),
+      index: this.tasks.length
     };
-
+    console.log(taskData);
     this.http.post<{message: string, task: TaskModel}>(
       BACKEND_URL,
       taskData
@@ -119,7 +131,8 @@ export class TaskService {
         description: '',
         completion: false,
         edit: true,
-        date: response.task.date
+        date: response.task.date,
+        index: this.tasks.length
       };
       this.tasks.push(task);
 

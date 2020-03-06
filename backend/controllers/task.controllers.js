@@ -5,7 +5,8 @@ exports.post = (req, res, next) => {
     const task = new Task({
         description: req.body.description,
         completion: req.body.completion,
-        date: req.body.date
+        date: req.body.date,
+        index: req.body.index,
         // creator: req.userData.userId
     });
     task.save()
@@ -31,6 +32,7 @@ exports.put = (req, res, next) => {
         _id: req.body.id,
         description: req.body.description,
         completion: req.body.completion,
+        index: req.body.index,
         // creator: req.userData.userId
     });
     Task.updateOne(

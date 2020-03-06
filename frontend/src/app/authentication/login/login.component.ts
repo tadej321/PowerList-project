@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Subscription} from 'rxjs';
-import {NgForm} from '@angular/forms';
+import {NgForm, NgModel} from '@angular/forms';
 
 @Component({
   templateUrl: './login.component.html',
@@ -11,6 +11,8 @@ import {NgForm} from '@angular/forms';
 export class LoginComponent implements OnInit, OnDestroy {
 
   private authStatusSub: Subscription;
+  private correctPassword;
+  private correctEmail;
 
   constructor(public authService: AuthService) {}
 
@@ -25,7 +27,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (form.invalid) {
       return;
     }
-    this.authService.login(form.value.email, form.value.password);
+
+    if (!form.value.password) {
+      this.correctPassword = false;
+      return;
+    }
+
+    this.authService.login(form.value.email, form.value.password).catch(e => {
+      if (e.error.message === 'Auth failed, password not found') {
+        this.correctPassword = false;
+      } else if (e.error.message === 'Auth failed, email not found') {
+        this.correctEmail = false;
+      }
+    });
+  }
+
+  onFocus() {
+    this.correctPassword = true;
+    this.correctEmail = true;
   }
 
 }

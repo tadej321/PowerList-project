@@ -23,7 +23,8 @@ export class TaskEditComponent implements OnInit {
       id: this.task.id,
       description: descriptionInput.value,
       completion: this.task.completion,
-      date: this.task.date
+      date: this.task.date,
+      index: this.task.index
     };
     this.taskService.updateTask(task);
   }
