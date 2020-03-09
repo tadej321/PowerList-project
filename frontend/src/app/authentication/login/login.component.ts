@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.correctEmail = true;
+    this.correctPassword = true;
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe();
   }
 

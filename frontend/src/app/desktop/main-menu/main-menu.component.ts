@@ -11,15 +11,13 @@ import {Subscription} from "rxjs";
 export class MainMenuComponent implements OnInit {
 
   private authStatusSub: Subscription;
-  private name;
-  private surname;
+  private userData;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // this.name = this.authService.getUserCredentials().name;
-    // this.surname = this.authService.getUserCredentials().surname;
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe();
+    this.userData = this.authService.getUserCredentials();
+    console.log(this.userData);
   }
 
 }
