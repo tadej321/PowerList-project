@@ -1,12 +1,12 @@
-<div>
-  <div class="row" >
+<div class="p-0 m-0">
+  <div class="d-flex align-items-stretch" >
     <!-- Checkbox -->
-    <div class="col-md-2 ">
-      <div class="center"><input type="checkbox" name="checkbox" [checked]="task.completion" (change)="onCheckboxChange()"></div>
+    <div class="col-md-2" style="background-color: lightgrey">
+      <div class=""><input type="checkbox" name="checkbox" [checked]="task.completion" (change)="onCheckboxChange()"></div>
     </div>
     <!-- Invisible edit button -->
     <div class="col-md-8">
-      <button class="button center" (click)="onTaskEdit()">
+      <button class="button" (click)="onTaskEdit()">
         {{task.description}}
       </button>
     </div>
