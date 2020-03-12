@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center" appMovableArea>
+<div class="container justify-content-center" appMovableArea>
   <div class="">
     <!-- Date information -->
     <div style="padding: 40px">
@@ -7,18 +7,18 @@
     </div>
     <!-- Add task button-->
     <div class="text-center">
-      <button style="width: 20%; height: 30px;" (click)="onAddTask()">Add</button>
+      <button class="btn btn-outline-success" id="addButton" (click)="onAddTask()">Add</button>
     </div>
     <!-- List of Tasks -->
-    <div class="d-flex justify-content-center" appMovable>
+    <div class="d-flex justify-content-center overflow-auto" id="listContainer" style="max-height: 550px"  appMovable>
       <ul
         *ngIf="displayList"
-        class="list-group p-0 col-md-10"
+        class="list-group p-0 col-md-9"
         appSortableList
         (sort)="sort($event)"
         (update)="update()">
         <!-- Individual task item -->
-        <li class="list-group-item h-100 shadow bg-white rounded"  *ngFor="let task of tasks" appSortable appBorderHighlight>
+        <li class="list-group-item h-100 bg-white rounded"  *ngFor="let task of tasks"  appBorderHighlight>
           <div>
             <!-- edit task component -->
             <app-task-edit
@@ -35,21 +35,21 @@
 
             ></app-task-item>
           </div>
-          <div *ngIf="!task.edit" style="padding: 0; margin: 0;">
-            <div class="list-group-item helper" style="padding: 0;" *appDraggableHelper>
-              <app-task-item
-                [task]="task"
-                [index]="tasks.indexOf(task)"
-              ></app-task-item>
-            </div>
-          </div>
+<!--          <div *ngIf="!task.edit" style="padding: 0; margin: 0;">-->
+<!--            <div class="list-group-item helper" style="padding: 0;" *appDraggableHelper>-->
+<!--              <app-task-item-->
+<!--                [task]="task"-->
+<!--                [index]="tasks.indexOf(task)"-->
+<!--              ></app-task-item>-->
+<!--            </div>-->
+<!--          </div>-->
         </li>
         <li class="task-substitute"></li>
 
       </ul>
     </div>
     <!-- Footer component -->
-    <div class="" style="height: 50px">
+    <div class="d-flex justify-content-center overflow-auto" style="height: 100%">
       <app-footer></app-footer>
     </div>
   </div>

@@ -1,28 +1,31 @@
-<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
-  <!-- Logo -->
-  <a href="#" class="navbar-brand">PowerList</a>
+<div class="d-flex justify-content-center bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark justify-content-between col-md-5">
+    <!-- Logo -->
+    <a href="#" class="navbar-brand">PowerList</a>
 
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <!-- Notification Bell -->
-    <li class="nav-item">
-      <a *ngIf="userIsAuthenticated" href="#" class="nav-link">Bell</a>
-    </li>
-    <!-- Dropdown -->
-    <li class="nav-item">
-      <div *ngIf="userIsAuthenticated" ngbDropdown class="dropdown">
-        <!-- Dropdown Button -->
-        <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Dropdown Menu-->
-        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-          <button class="dropdown-item">Settings</button>
-          <button class="dropdown-item">Podcast</button>
-          <button (click)="onLogout()" class="dropdown-item">Log Out</button>
+    <!-- Links -->
+    <ul class="navbar-nav">
+      <!-- Notification Bell -->
+      <li class="nav-item">
+        <a *ngIf="userIsAuthenticated" href="#" class="nav-link">Bell</a>
+      </li>
+      <!-- Dropdown -->
+      <li class="nav-item">
+        <div *ngIf="userIsAuthenticated" ngbDropdown class="dropdown">
+          <!-- Dropdown Button -->
+          <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Dropdown Menu-->
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item">Settings</button>
+            <button class="dropdown-item">Podcast</button>
+            <button (click)="onLogout()" class="dropdown-item">Log Out</button>
+          </div>
         </div>
-      </div>
-    </li>
-  </ul>
-</nav>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 
