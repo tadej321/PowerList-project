@@ -18,6 +18,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {DateTimeUtility} from '../shared/date-time.utility';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {FormsModule} from '@angular/forms';
     NgbModule,
     RouterModule,
     OverlayModule,
+    FontAwesomeModule,
   ],
   providers: [
     DateTimeUtility,

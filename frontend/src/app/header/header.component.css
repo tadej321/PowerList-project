@@ -1,3 +1,11 @@
+#dropdownMenuButton {
+  box-shadow: none;
+}
+
+#bellListItem {
+  margin: 10% 10% 0 0;
+}
+
 /*
 .header {
   height: 100px;

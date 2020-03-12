@@ -6,14 +6,14 @@
     <!-- Links -->
     <ul class="navbar-nav">
       <!-- Notification Bell -->
-      <li class="nav-item">
-        <a *ngIf="userIsAuthenticated" href="#" class="nav-link">Bell</a>
+      <li class="nav-item" id="bellListItem" *ngIf="userIsAuthenticated">
+        <fa-icon  [icon]="bell" [styles]="{'color': 'white'}" size="lg"></fa-icon>
       </li>
       <!-- Dropdown -->
       <li class="nav-item">
         <div *ngIf="userIsAuthenticated" ngbDropdown class="dropdown">
           <!-- Dropdown Button -->
-          <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button ngbDropdownToggle class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
           </button>
           <!-- Dropdown Menu-->

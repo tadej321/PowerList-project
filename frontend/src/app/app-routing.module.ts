@@ -4,7 +4,7 @@ import {DesktopComponent} from './desktop/desktop.component';
 import {AuthGuard} from './authentication/auth-guard';
 
 const routes: Routes = [
-  {path: 'auth', loadChildren: './authentication/auth.module#AuthModule'},
+  {path: 'auth', loadChildren: () => import('./authentication/auth.module').then(m => m.AuthModule)},
   {path: '', component: DesktopComponent, canActivate: [AuthGuard]}
 ];
 

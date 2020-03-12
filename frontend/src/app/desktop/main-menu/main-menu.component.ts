@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../authentication/auth.service";
 import {Subscription} from "rxjs";
+import { faListAlt, faChartBar, faStar } from '@fortawesome/free-regular-svg-icons';
 
 @Component ({
   selector: 'app-main-menu',
@@ -11,7 +12,10 @@ import {Subscription} from "rxjs";
 export class MainMenuComponent implements OnInit {
 
   private authStatusSub: Subscription;
-  private userData;
+  public userData;
+  public listAlt = faListAlt;
+  public chartBar = faChartBar;
+  public star = faStar;
 
   constructor(private authService: AuthService) {}
 

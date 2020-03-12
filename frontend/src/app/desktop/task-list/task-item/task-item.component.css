@@ -6,7 +6,10 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  background-color: #5cb85c;
+  border: none;
+}
 #removeButton {
   height: 20px;
   width: 15px;
