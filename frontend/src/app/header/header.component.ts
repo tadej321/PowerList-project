@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../authentication/auth.service";
 import {Subscription} from "rxjs";
+import { faBell } from '@fortawesome/free-regular-svg-icons';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +15,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   constructor(private authService: AuthService) {}
+
+  public bell = faBell;
+  public settings = faSlidersH
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();

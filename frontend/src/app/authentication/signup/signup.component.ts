@@ -10,8 +10,8 @@ import {NgForm, NgModelGroup} from '@angular/forms';
 
 export class SignupComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
-  private passwordMismatch = false;
-  private emailTaken = false;
+  public passwordMismatch = false;
+  public emailTaken = false;
 
   constructor(public authService: AuthService) {}
 

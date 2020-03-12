@@ -1,3 +1,20 @@
-#menuContainer {
-  background-color: #F8F8F8;
+@media (max-width: 768px) {
+  #menuContainer {
+    display: none;
+  }
+
+  #desktop-inner {
+    height: 60vh;
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  #desktop-inner {
+    height: 60vh;
+    width: 100%;
+  }
+}
+
+#desktop-inner {
+  height: 60vh;
 }

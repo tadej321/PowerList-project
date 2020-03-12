@@ -1,7 +1,7 @@
-<div class="p-0 m-0">
-  <div class="d-flex align-items-stretch" >
+<div class="container p-0 m-0">
+  <div class="row col-12 m-0 p-0" >
     <!-- Checkbox -->
-    <div class="col-sm-2" style="background-color: #F8F8F8">
+    <div class="col-2 bg-veryLightGrey">
       <div class="custom-control custom-checkbox center">
         <input
           type="checkbox"
@@ -14,15 +14,17 @@
       </div>
     </div>
     <!-- Invisible edit button -->
-    <div class="col-md-8">
+    <div class="col-8 p-0">
       <button class="button" (click)="onTaskEdit()">
         {{task.description}}
       </button>
     </div>
     <!-- Habit and count -->
-    <div class="d-flex align-items-end flex-column col-sm-2 p-0" style="line-height: 0.7">
+    <div class="d-flex align-items-end flex-column col-2 p-0" style="line-height: 0.7">
       <div class="">
-        <button class="btn-secondary p-0 border-0" id="removeButton" (click)="onTaskRemove()">X</button>
+        <button class="btn p-0 border-0" id="removeButton" (click)="onTaskRemove()">
+          <fa-icon [icon]="remove" [styles]="{'color':'#747c7c'}" size="lg"></fa-icon>
+        </button>
       </div>
       <div class="" id="countTag">
         <p>Task {{index + 1}}</p>

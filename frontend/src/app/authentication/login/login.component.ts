@@ -11,8 +11,8 @@ import {NgForm, NgModel} from '@angular/forms';
 export class LoginComponent implements OnInit, OnDestroy {
 
   private authStatusSub: Subscription;
-  private correctPassword;
-  private correctEmail;
+  public correctPassword;
+  public correctEmail;
 
   constructor(public authService: AuthService) {}
 
