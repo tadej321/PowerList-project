@@ -26,7 +26,7 @@ import {Subscription} from 'rxjs';
   private newIndex;
 
   private differ: any;
-  private displayList = false;
+  public displayList = false;
 
   constructor(public taskService: TaskService, differs: IterableDiffers) {
     this.differ = differs.find([]).create(null);

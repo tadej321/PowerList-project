@@ -1,20 +1,43 @@
-<div>
-  <div class="row" >
+<div class="container p-0 m-0">
+  <div class="row col-12 m-0 p-0" >
     <!-- Checkbox -->
-    <div class="col-md-2 ">
-      <div class="center"><input type="checkbox" name="checkbox" [checked]="task.completion" (change)="onCheckboxChange()"></div>
+    <div class="col-2 bg-veryLightGrey">
+      <div class="custom-control custom-checkbox center">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="{{'checkbox' + index}}"
+          name="checkbox"
+          [checked]="task.completion"
+          (change)="onCheckboxChange()">
+        <label class="custom-control-label" for="{{'checkbox' + index}}"></label>
+      </div>
     </div>
     <!-- Invisible edit button -->
-    <div class="col-md-8">
-      <button class="button center" (click)="onTaskEdit()">
+    <div class="col-8 p-0">
+      <button class="button" (click)="onTaskEdit()">
         {{task.description}}
       </button>
     </div>
     <!-- Habit and count -->
-    <div class="col-md-2" style="line-height: 0.7">
-      <p>Task {{index + 1}}</p>
-      <p>Habit</p>
-      <button class="" (click)="onTaskRemove()">X</button>
+    <div class="d-flex align-items-end flex-column col-2 p-0" style="line-height: 0.7">
+      <div class="">
+        <button class="btn p-0 border-0" id="removeButton" (click)="onTaskRemove()">
+          <fa-icon [icon]="remove" [styles]="{'color':'#747c7c'}" size="lg"></fa-icon>
+        </button>
+      </div>
+      <div class="" id="countTag">
+        <p>Task {{index + 1}}</p>
+      </div>
+      <div class="" id="habitTag">
+        <select name="habits" id="habitsMenu" class="custom-select border-0 bg-primary text-white ">
+          <option class="bg-secondary text-white" value="HabitGrey">Habit</option>
+          <option class="bg-primary text-white" value="HabitGreen">Habit</option>
+          <option class="bg-success text-white" value="HabitBlue">Habit</option>
+          <option class="bg-warning text-white" value="HabitYellow">Habit</option>
+          <option class="bg-info text-white" value="HabitOrange">Habit</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>

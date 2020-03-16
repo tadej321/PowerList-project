@@ -9,6 +9,8 @@ import {AuthInterceptor} from './authentication/auth-interceptor';
 import {AuthGuard} from './authentication/auth-guard';
 import {DesktopModule} from './desktop/desktop.module';
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    FontAwesomeModule
   ],
   providers: [
     AuthGuard,

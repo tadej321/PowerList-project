@@ -4,7 +4,7 @@ import {Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} fro
   selector: '[appBorderHighlight]'
 })
 export class BorderHighlightDirective implements OnInit {
-  @HostBinding('style.border') border = '1px solid #D3D3D3';
+  @HostBinding('style.box-shadow') shadow = '10px 10px 8px #A9A9A9';
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
 
@@ -13,12 +13,12 @@ export class BorderHighlightDirective implements OnInit {
 
   @HostListener('mouseenter') mouseover(eventData: Event) {
     // this.renderer.setStyle(this.elRef.nativeElement, 'border', '1px solid #0000FF'); // use this method if not using @HostBinding
-    this.border = '1px solid #0000FF';
+    this.shadow = '10px 10px 8px 6px #888888';
   }
 
   @HostListener('mouseleave') mouseleave(eventData: Event) {
     // this.renderer.setStyle(this.elRef.nativeElement, 'border', 'none');
-    this.border = '1px solid #D3D3D3';
+    this.shadow = '10px 10px 8px #A9A9A9';
   }
 
   // @HostListener('dragStart') onDragStart() {

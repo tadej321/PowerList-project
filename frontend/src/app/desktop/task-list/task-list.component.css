@@ -1,7 +1,26 @@
-li {
-  margin: 10px 0;
-  height: 80px;
+@media (min-width: 767px) {
+  #sideMenuToggler {
+    display: none;
+  }
+}
 
+
+li {
+  margin: 2% 1% 2% 1%;
+  height: 20%;
+  padding: 0;
+}
+
+div {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#addButton {
+  width: 16%;
+}
+
+#listContainer {
+  padding: 0 0 3% 0;
 }
 
 /*li.dragging {*/
