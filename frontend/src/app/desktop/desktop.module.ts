@@ -3,7 +3,7 @@ import {MainMenuComponent} from './main-menu/main-menu.component';
 import {DesktopComponent} from './desktop.component';
 import {TaskListComponent} from './task-list/task-list.component';
 import {TaskItemComponent} from './task-list/task-item/task-item.component';
-import {FooterComponent} from './task-list/footer/footer.component';
+import {DaySelectComponent} from './task-list/day-select/day-select.component';
 import {TaskEditComponent} from './task-list/task-edit/task-edit.component';
 import {BorderHighlightDirective} from '../directives/border-highlight.directive';
 import {DraggableDirective} from '../directives/draggable.directive';
@@ -26,7 +26,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     DesktopComponent,
     TaskListComponent,
     TaskItemComponent,
-    FooterComponent,
+    DaySelectComponent,
     TaskEditComponent,
     TaskEditComponent,
     BorderHighlightDirective,
