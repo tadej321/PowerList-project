@@ -1,7 +1,19 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  QueryList, TemplateRef,
+  ViewChildren
+} from '@angular/core';
 import {TaskService} from '../task-list/task.service';
 import * as moment from 'moment';
 import * as $ from 'jquery';
+import {PeriodModel} from "./period.model";
+
+
 
 /**
  * Represents the row of buttons used for switching between days of the week
@@ -17,40 +29,43 @@ export class DaySelectComponent implements OnInit, AfterViewInit {
   currentDay = new Date();
   currentDate = moment();
 
-  days: Array<string> = [];
+  @Input()
+  periods: PeriodModel[] = [];
+
   @ViewChildren('labelContainer') labelContainer: QueryList<ElementRef>;
+
+
 
   constructor(private taskService: TaskService, private elementRef: ElementRef) {}
 
   ngOnInit() {
 
-    const weekStart = this.currentDate.clone().startOf('isoWeek');
-
-    for (let i = 0; i <= 6; i++) {
-      this.days.push(moment(weekStart).add(i, 'days').format('dddd,YYYY-MM-DD'));
-    }
-
   }
 
   ngAfterViewInit(): void {
-    const index = this.days.indexOf(moment().format('dddd,YYYY-MM-DD'));
-
-    this.toggleDay(index);
+    for (const period of this.periods) {
+      if (period.startDate.format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+        this.toggleDay(this.periods.indexOf(period));
+      }
+    }
   }
 
   /**
    * Switches to day of week that was selected.
    *
-   * @param selectedDay Selected day.
-   * */
-  onDaySelect(selectedDay: string) {
-    const index = this.days.indexOf(selectedDay);
+   * @param selectedPeriod Selected day.
+   */
+  onDaySelect(selectedPeriod: PeriodModel) {
 
-    this.toggleDay(index);
+    for (const period of this.periods) {
+      if (period.startDate.format('YYYY-MM-DD') === selectedPeriod.startDate.format('YYYY-MM-DD')) {
+        this.toggleDay(this.periods.indexOf(period));
+      }
+    }
 
-    const date = this.days[index].split(',', 2);
+    const endDate = selectedPeriod.endDate ? selectedPeriod.endDate : undefined;
 
-    this.taskService.getTasksOfDate(moment(date[1]));
+    this.taskService.getTasksOfDate(selectedPeriod.startDate, endDate);
   }
 
   /**

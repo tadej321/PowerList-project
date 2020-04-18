@@ -4,9 +4,10 @@ import { single } from './data';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {TaskService} from '../task-list/task.service';
 import * as moment from 'moment';
-import {Subject, Subscription} from "rxjs";
-import {TaskModel} from "../task-list/task.model";
-import {map, take} from "rxjs/operators";
+import {Subject, Subscription} from 'rxjs';
+import {TaskModel} from '../task-list/task.model';
+import {map, take} from 'rxjs/operators';
+import {PeriodModel} from '../day-select/period.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,15 +34,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
   };
 
 
+  public period: PeriodModel[] = [
+    {
+      label: 'This Week',
+      startDate: moment().day(1),
+      endDate: moment().day(7)
+    },
+    {
+      label: 'This Month',
+      startDate: moment().startOf('month'),
+      endDate: moment().endOf('month')
+    },
+    {
+      label: 'This Year',
+      startDate: moment().startOf('year'),
+      endDate: moment().endOf('year')
+    }
+  ];
+
   public data = [{name: 'completed', value: 0}, {name: 'failed', value: 0}];
-  dataUpdated = new Subject<{data}>();
 
   constructor(public taskService: TaskService) {
 
   }
 
   ngOnInit(): void {
-    this.setPeriod('week');
+
     this.taskSub = this.taskService.getTaskUpdatedListener()
       .pipe( map(taskData => {
         return this.formatData(taskData.tasks);
@@ -66,35 +84,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   onDeactivate(data): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
-
-  setPeriod(period: string) {
-
-    let startDate;
-    let endDate;
-
-    switch (period) {
-      case 'week' :
-        startDate = moment().day(1);
-        endDate = moment().day(7);
-        break;
-
-      case 'month':
-        startDate = moment().startOf('month');
-        endDate = moment().endOf('month');
-        break;
-
-      case 'year':
-        startDate = moment().startOf('year');
-        endDate = moment().endOf('year');
-    }
-
-    endDate.add(1, 'days');
-    this.getData(startDate, endDate);
-  }
-
-  getData(startDate, endDate) {
-    this.taskService.getTasksOfDate(startDate, endDate);
   }
 
   formatData(taskData: TaskModel[]) {

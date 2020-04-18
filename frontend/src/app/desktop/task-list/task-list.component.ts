@@ -4,6 +4,7 @@ import {TaskService} from './task.service';
 import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';
 import {Subscription} from 'rxjs';
+import {PeriodModel} from "../day-select/period.model";
 
 /**
  * Represents the tab that displays the tasks.
@@ -28,6 +29,7 @@ import {Subscription} from 'rxjs';
 
   private differ: any;
   public displayList = false;
+  public period: PeriodModel[] = [];
 
   constructor(public taskService: TaskService, differs: IterableDiffers) {
     this.differ = differs.find([]).create(null);
@@ -36,6 +38,14 @@ import {Subscription} from 'rxjs';
   ngOnInit() {
     this.displayList = false;
     this.taskService.getTasksOfDate(moment());
+
+    const weekStart = moment().startOf('isoWeek');
+
+    for (let i = 0; i <= 6; i++) {
+      const date = moment(weekStart).add(i, 'days');
+      this.period.push({label: date.format('dddd'), startDate: date});
+    }
+
     this.taskSub = this.taskService.getTaskUpdatedListener()
       .subscribe((taskData: {tasks: TaskModel[]}) => {
         console.log(taskData);

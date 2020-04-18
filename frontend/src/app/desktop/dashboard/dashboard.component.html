@@ -1,23 +1,5 @@
 <div>
-  <div class="container-fluid" style="margin-top: 20px">
-    <div class="col-12 btn-group btn-group-toggle scrollMenu"  #labelContainer data-toggle="buttons">
-      <label class="btn">
-        <input (click)="setPeriod('week')" type="radio" name="options" id="week" >This Week
-      </label>
-      <label class="btn">
-        <input (click)="setPeriod('month')" type="radio" name="options" id="month" >This Month
-      </label>
-      <label class="btn">
-        <input (click)="setPeriod('year')" type="radio" name="options" id="year" >This Year
-      </label>
-      <mat-form-field>
-        <input matInput [matDatepicker]="myDatepicker">
-        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #myDatepicker></mat-datepicker>
-      </mat-form-field>
-    </div>
-  </div>
-
+  <app-day-select [periods]="period"></app-day-select>
   <ngx-charts-advanced-pie-chart
     [view]="view"
     [scheme]="colorScheme"
