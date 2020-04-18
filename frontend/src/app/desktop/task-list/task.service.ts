@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl + '/task/';
@@ -31,14 +31,21 @@ export class TaskService {
   ) {}
 
   /**
-   * Fetches tasks of a certain date from the database
+   * Fetches tasks between two dates from the database
    *
-   * @param date Formatted date string of the desired date
    * @returns Array of tasks with all their information
+   * @param startDate Start date of the tasks we want returned
+   * @param endDate (optional) End date of the tasks we want returned
    */
-  getTasksOfDay(date: string) {
-    this.http.get<{message: string, tasks: any}>(
-      BACKEND_URL + date
+  getTasksOfDate(startDate: moment.Moment, endDate?: moment.Moment) {
+
+    if (!endDate) {
+      endDate = startDate.clone();
+      endDate.add(1, 'days');
+    }
+
+    return this.http.get<{message: string, tasks: any}>(
+      BACKEND_URL + startDate.toISOString() + '/' + endDate.toISOString()
     )
       .pipe(map((taskData) => {
         return { tasks: taskData.tasks.map(task => {
@@ -159,10 +166,9 @@ export class TaskService {
     const taskData = {
       description: '',
       completion: false,
-      date: moment().format('YYYY-MM-DD'),
+      date: moment(),
       index: this.tasks.length
     };
-    console.log(taskData);
     this.http.post<{message: string, task: TaskModel}>(
       BACKEND_URL,
       taskData
@@ -179,10 +185,6 @@ export class TaskService {
 
       this.tasksUpdated.next({tasks: [...this.tasks]});
     });
-  }
-
-  changeDay(day: string) {
-    console.log(day);
   }
 
 }

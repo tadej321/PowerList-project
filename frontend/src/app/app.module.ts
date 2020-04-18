@@ -8,9 +8,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {AuthInterceptor} from './authentication/auth-interceptor';
 import {AuthGuard} from './authentication/auth-guard';
 import {DesktopModule} from './desktop/desktop.module';
-import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
 @NgModule({
@@ -25,7 +25,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     AppRoutingModule,
     NgbDropdownModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatMomentDateModule
   ],
   providers: [
     AuthGuard,

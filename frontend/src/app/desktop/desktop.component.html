@@ -1,10 +1,62 @@
 <div class="container">
   <div class="row" id="desktop-inner">
-    <div class="col-4 h-100 p-0" id="menuContainer">
-      <app-main-menu></app-main-menu>
+    <div class="col-md-4 d-none d-sm-none d-md-block h-100 p-0" id="menuContainer">
+      <div class="row h-100 w-100 bg-veryLightGrey p-0" >
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9">
+          <div class="row" style="margin-top: 60px">
+            <div class="col-sm-12">
+              <div class="float-right" style="line-height: 0.7">
+                <h4 class="">{{userData.name + ' ' + userData.surname}}</h4>
+                <p>15/30</p>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="float-right" style="padding: 20px">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Chimichurri_Sauce_Recipe_%2813294405363%29.jpg"
+                  alt=""
+                  style="max-height: 50px; max-width: 50px"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item p-0">
+                <button class="btn m-0 p-0 h-100 w-100 bg-veryLightGrey" (click)="onTabSwitch('dashboard')">
+                  <div class="row m-0 pl-25">
+                    <fa-icon class="icon m-0" [icon]="chartBar" size="lg"></fa-icon>
+                    <p class="text-center m-0 pl-10">Dashboard</p>
+                  </div>
+                </button>
+              </li>
+              <li class="list-group-item p-0">
+                <button class="btn m-0 p-0 h-100 w-100 bg-veryLightGrey" (click)="onTabSwitch('tasks')">
+                  <div class="row m-0 pl-25">
+                    <fa-icon class="icon m-0" [icon]="star" size="lg"></fa-icon>
+                    <p class="text-center m-0 pl-10">Today</p>
+                  </div>
+                </button>
+              </li>
+              <li class="list-group-item p-0">
+                <button class="btn m-0 p-0 h-100 w-100 bg-veryLightGrey" (click)="onTabSwitch('tomorrow')">
+                  <div class="row m-0 pl-25">
+                    <fa-icon class="icon m-0" [icon]="listAlt" size="lg"></fa-icon>
+                    <p class="text-center m-0 pl-10">Tomorrow</p>
+                  </div>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="col-8 p-0 m-0" style="border: 1px solid black">
-      <app-task-list></app-task-list>
+    <div class="col-md-8 d-sm-block p-0 m-0" id="listContainer" style="border: 1px solid black">
+      <app-task-list *ngIf="showTab === 'tasks'"></app-task-list>
+      <app-dashboard *ngIf="showTab === 'dashboard'"></app-dashboard>
     </div>
   </div>
 </div>

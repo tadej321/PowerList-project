@@ -1,0 +1,7 @@
+<div class="container-fluid" style="margin-top: 20px">
+  <div class="col-12 btn-group btn-group-toggle scrollMenu"  #labelContainer data-toggle="buttons">
+    <label class="btn" *ngFor="let day of days">
+      <input (click)="onDaySelect(day)" type="radio" name="options" id="{{day}}" >{{day.split(",", 1)}}
+    </label>
+  </div>
+</div>

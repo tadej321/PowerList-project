@@ -1,0 +1,20 @@
+.scrollMenu {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+label {
+  border-bottom: 1px solid #D3D3D3;
+  color: #D0D0D0
+}
+
+label:hover {
+  border-bottom: 1px solid #0077e6;
+  color: #0077e6
+}
+
+.toggled {
+  border-bottom: 1px solid #0077e6;
+  color: #0077e6
+}
+

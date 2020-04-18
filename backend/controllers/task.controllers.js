@@ -1,4 +1,5 @@
 const Task = require('../db/models/task.model');
+const moment = require('moment');
 
 // Post a new task.
 exports.post = (req, res, next) => {
@@ -93,7 +94,11 @@ exports.getById = (req, res, next) => {
 
 // Get tasks by date
 exports.getByDate = (req, res, next) => {
-    Task.find({date: req.params.date})
+
+    const startDate = moment(req.params.startDate).format('YYYY-MM-DD');
+    const endDate = moment(req.params.endDate).format('YYYY-MM-DD');
+
+    Task.find({date: {$gte: startDate, $lte: endDate}})
         .then(tasks => {
             if (tasks) {
                 res.status(200).json({

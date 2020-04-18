@@ -32,7 +32,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.passwordMismatch = false;
     this.emailTaken = false;
     if (form.invalid) {
-      console.log("REQ");
       event.preventDefault();
       return;
     }

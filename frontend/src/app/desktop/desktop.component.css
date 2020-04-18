@@ -1,7 +1,4 @@
 @media (max-width: 768px) {
-  #menuContainer {
-    display: none;
-  }
 
   #desktop-inner {
     height: 60vh;

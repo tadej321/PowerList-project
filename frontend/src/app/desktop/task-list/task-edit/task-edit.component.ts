@@ -1,6 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskService} from '../task.service';
-import {TaskModel} from "../task.model";
+import {TaskModel} from '../task.model';
+
+/**
+ * Represents a task in it's editable state.
+ * */
 
 @Component({
   selector: 'app-task-edit',
@@ -11,13 +15,17 @@ export class TaskEditComponent implements OnInit {
   // @Output() taskSaved = new EventEmitter<{taskDescription: string}>();
   @Input() taskCount: number;
   @Input() task: TaskModel;
+
   constructor(public taskService: TaskService) {}
 
   ngOnInit() {
   }
 
-
-  // Emit the changes of the edited task.
+  /**
+   * Sends the updated information for saving.
+   *
+   * @param descriptionInput New task description.
+   */
   onSaveTask(descriptionInput: HTMLInputElement) {
     const task: TaskModel = {
       id: this.task.id,

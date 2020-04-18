@@ -3,6 +3,10 @@ import {TaskService} from '../task.service';
 import {TaskModel} from '../task.model';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Represents the task.
+ */
+
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
@@ -21,18 +25,23 @@ export class TaskItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  // Call change to edit mode method
+  /**
+   * Requests to change the state of the task to editable
+   */
   onTaskEdit() {
-    console.log(this.task.id);
     this.taskService.editTask(this.task.id);
   }
 
-  // Call remove task method
+  /**
+   * Requests the removal of the task
+   */
   onTaskRemove() {
     this.taskService.removeTask(this.task.id);
   }
 
-  // Call update task method
+  /**
+   * Requests the update of the tasks checkbox state
+   */
   onCheckboxChange() {
     const task: TaskModel = {
       id: this.task.id,

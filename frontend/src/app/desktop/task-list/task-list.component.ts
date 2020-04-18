@@ -5,7 +5,9 @@ import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';
 import {Subscription} from 'rxjs';
 
-
+/**
+ * Represents the tab that displays the tasks.
+ */
 
 @Component ({
   selector: 'app-task-list',
@@ -21,7 +23,7 @@ import {Subscription} from 'rxjs';
   dateString;
   dayString;
 
-  private curentIndex;
+  private currentIndex;
   private newIndex;
 
   private differ: any;
@@ -33,9 +35,10 @@ import {Subscription} from 'rxjs';
 
   ngOnInit() {
     this.displayList = false;
-    this.taskService.getTasksOfDay(moment().format('YYYY-MM-DD'));
+    this.taskService.getTasksOfDate(moment());
     this.taskSub = this.taskService.getTaskUpdatedListener()
       .subscribe((taskData: {tasks: TaskModel[]}) => {
+        console.log(taskData);
         this.tasks = taskData.tasks;
         this.displayList = true;
       });
@@ -45,16 +48,21 @@ import {Subscription} from 'rxjs';
     this.taskSub.unsubscribe();
   }
 
-
+  /**
+   * Requests the addition of a new task
+   */
   onAddTask() {
     this.taskService.addTask();
   }
 
+  /**
+   *
+   * */
   sort(event: SortEvent) {
     const current = this.tasks[event.currentIndex];
     const swapWith = this.tasks[event.newIndex];
 
-    this.curentIndex = event.newIndex;
+    this.currentIndex = event.newIndex;
     this.newIndex = event.currentIndex;
 
     current.index = event.newIndex;
@@ -67,8 +75,8 @@ import {Subscription} from 'rxjs';
   }
 
   update() {
-    if (this.curentIndex && this.newIndex) {
-      this.taskService.updateTask(this.tasks[this.curentIndex]);
+    if (this.currentIndex && this.newIndex) {
+      this.taskService.updateTask(this.tasks[this.currentIndex]);
       this.taskService.updateTask(this.tasks[this.newIndex]);
 
       this.ngOnInit();

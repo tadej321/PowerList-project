@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
-import {MainMenuComponent} from './main-menu/main-menu.component';
 import {DesktopComponent} from './desktop.component';
 import {TaskListComponent} from './task-list/task-list.component';
 import {TaskItemComponent} from './task-list/task-item/task-item.component';
-import {DaySelectComponent} from './task-list/day-select/day-select.component';
+import {DaySelectComponent} from './day-select/day-select.component';
 import {TaskEditComponent} from './task-list/task-edit/task-edit.component';
 import {BorderHighlightDirective} from '../directives/border-highlight.directive';
 import {DraggableDirective} from '../directives/draggable.directive';
@@ -14,15 +13,19 @@ import {SortableListDirective} from '../directives/sortable-list.directive';
 import {SortableDirective} from '../directives/sortable.directive';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule} from '@angular/router';
-import {OverlayModule} from '@angular/cdk/overlay';
 import {DateTimeUtility} from '../shared/date-time.utility';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
-    MainMenuComponent,
     DesktopComponent,
     TaskListComponent,
     TaskItemComponent,
@@ -36,14 +39,19 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     DraggableHelperDirective,
     SortableListDirective,
     SortableDirective,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
     RouterModule,
-    OverlayModule,
     FontAwesomeModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    NgxChartsModule,
+    MatDatepickerModule,
+    MatInputModule
   ],
   providers: [
     DateTimeUtility,
