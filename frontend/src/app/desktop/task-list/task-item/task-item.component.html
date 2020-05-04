@@ -1,43 +1,80 @@
 <div class="container p-0 m-0">
-  <div class="row col-12 m-0 p-0" >
-    <!-- Checkbox -->
-    <div class="col-2 bg-veryLightGrey">
-      <div class="custom-control custom-checkbox center">
-        <input
-          type="checkbox"
-          class="custom-control-input"
-          id="{{'checkbox' + index}}"
-          name="checkbox"
-          [checked]="task.completion"
-          (change)="onCheckboxChange()">
-        <label class="custom-control-label" for="{{'checkbox' + index}}"></label>
-      </div>
-    </div>
-    <!-- Invisible edit button -->
-    <div class="col-8 p-0">
-      <button class="button" (click)="onTaskEdit()">
-        {{task.description}}
-      </button>
-    </div>
-    <!-- Habit and count -->
-    <div class="d-flex align-items-end flex-column col-2 p-0" style="line-height: 0.7">
-      <div class="">
-        <button class="btn p-0 border-0" id="removeButton" (click)="onTaskRemove()">
-          <fa-icon [icon]="remove" [styles]="{'color':'#747c7c'}" size="lg"></fa-icon>
-        </button>
-      </div>
-      <div class="" id="countTag">
-        <p>Task {{index + 1}}</p>
-      </div>
-      <div class="" id="habitTag">
-        <select name="habits" id="habitsMenu" class="custom-select border-0 bg-primary text-white ">
-          <option class="bg-secondary text-white" value="HabitGrey">Habit</option>
-          <option class="bg-primary text-white" value="HabitGreen">Habit</option>
-          <option class="bg-success text-white" value="HabitBlue">Habit</option>
-          <option class="bg-warning text-white" value="HabitYellow">Habit</option>
-          <option class="bg-info text-white" value="HabitOrange">Habit</option>
-        </select>
-      </div>
-    </div>
+  <div class="row col-12 m-0 p-0" style="height: 85px">
+    <ng-container *ngTemplateOutlet="task.edit ? editable : uneditable">
+
+    </ng-container>
   </div>
 </div>
+
+
+<ng-template #uneditable>
+  <!-- Checkbox -->
+  <div class="col-2 bg-veryLightGrey">
+    <div class="custom-control custom-checkbox center">
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="{{'checkbox' + index}}"
+        name="checkbox"
+        [checked]="task.completion"
+        (change)="onCheckboxChange()">
+      <label class="custom-control-label" for="{{'checkbox' + index}}"></label>
+    </div>
+  </div>
+  <!-- Invisible edit button -->
+  <div class="col-8 p-0">
+    <button id="editButton" (click)="onTaskEdit()">
+      {{task.description}}
+    </button>
+  </div>
+  <!-- Habit and count -->
+  <div class="d-flex align-items-end flex-column col-2 p-0" style="line-height: 0.7">
+    <div>
+      <button class="btn p-0 border-0 removeButton" id="removeButton" (click)="onTaskRemove()">
+        <fa-icon [icon]="remove" style="color: #747c7c" size="lg"></fa-icon>
+      </button>
+    </div>
+    <div class="indexTag" id="indexTag">
+      <p>Task {{index + 1}}</p>
+    </div>
+          <div id="habitTag">
+            <select name="habits" id="habitsMenu" class="custom-select border-0 bg-primary text-white ">
+              <option class="bg-secondary text-white" value="HabitGrey">Habit</option>
+              <option class="bg-primary text-white" value="HabitGreen">Habit</option>
+              <option class="bg-success text-white" value="HabitBlue">Habit</option>
+              <option class="bg-warning text-white" value="HabitYellow">Habit</option>
+              <option class="bg-info text-white" value="HabitOrange">Habit</option>
+            </select>
+          </div>
+  </div>
+</ng-template>
+
+<ng-template #editable>
+
+      <!-- Save task button -->
+      <div class="col-2 bg-veryLightGrey">
+          <button class="center btn btn-primary" (click)="onSaveTask(taskDescriptionInput)">Save</button>
+      </div>
+      <!-- Textarea input field -->
+      <div class="col-md-8">
+        <input
+          class="center border-0"
+          type="text"
+          style="outline: none; width: 80%"
+          placeholder="... Describe task"
+          value="{{task.description}}"
+          #taskDescriptionInput
+        >
+      </div>
+  <div class="d-flex align-items-end flex-column col-2 p-0" style="line-height: 0.7">
+    <div>
+      <button class="btn p-0 border-0 removeButton" id="editRemoveButton" (click)="onTaskRemove()">
+        <fa-icon [icon]="remove" style="color: #747c7c" size="lg"></fa-icon>
+      </button>
+    </div>
+    <div class="indexTag" id="editIndexTag">
+      <p>Task {{index + 1}}</p>
+    </div>
+  </div>
+
+</ng-template>

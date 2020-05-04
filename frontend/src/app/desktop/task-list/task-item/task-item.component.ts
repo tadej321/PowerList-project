@@ -52,4 +52,20 @@ export class TaskItemComponent implements OnInit {
     };
     this.taskService.updateTask(task);
   }
+
+  /**
+   * Sends the updated information for saving.
+   *
+   * @param descriptionInput New task description.
+   */
+  onSaveTask(descriptionInput: HTMLInputElement) {
+    const task: TaskModel = {
+      id: this.task.id,
+      description: descriptionInput.value,
+      completion: this.task.completion,
+      date: this.task.date,
+      index: this.task.index
+    };
+    this.taskService.updateTask(task);
+  }
 }

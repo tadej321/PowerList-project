@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./db/dbConnect');
+const passport = require('passport');
+const JWTStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 
 
@@ -13,6 +16,11 @@ const app = express();
 
 const url = 'mongodb://localhost/PowerList';
 
+const passportOpts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: process.env.JWT_KEY
+};
+
 db.connect(process.env.DB_URI || url)
     .then(() => {
         console.log("Connected to database");
@@ -22,6 +30,9 @@ db.connect(process.env.DB_URI || url)
     });
 
 app.use(bodyParser.json());
+// app.use(passport.initialize());
+// app.use(passport.session());
+
 app.use((req, res, next) => {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -35,6 +46,18 @@ app.use((req, res, next) => {
     );
     next();
 });
+
+// passport.use(new JWTStrategy(passportOpts, function (jwtPayload, done) {
+//     const expirationDate = new Date(jwtPayload.exp * 1000);
+//     if(expirationDate < new Date()) {
+//         return done(null, false);
+//     }
+//     done(null, jwtPayload);
+// }));
+
+// passport.serializeUser(function (user, done) {
+//     done(null, user._id)
+// });
 
 app.use("/api/task", taskRoutes);
 app.use("/api/user", userRoutes);

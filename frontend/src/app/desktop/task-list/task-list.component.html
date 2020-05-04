@@ -26,16 +26,7 @@
       <!-- Individual task item -->
       <li class="list-group-item h-100 bg-white rounded"  *ngFor="let task of tasks"  appBorderHighlight>
         <div>
-          <!-- edit task component -->
-          <app-task-edit
-            *ngIf="task.edit"
-            [task]="task"
-            [taskCount]="tasks.indexOf(task)"
-
-          ></app-task-edit>
-          <!-- Task item component -->
           <app-task-item
-            *ngIf="!task.edit || task.edit === undefined"
             [task]="task"
             [index]="tasks.indexOf(task)"
 

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {DesktopComponent} from './desktop.component';
 import {TaskListComponent} from './task-list/task-list.component';
 import {TaskItemComponent} from './task-list/task-item/task-item.component';
@@ -19,10 +19,9 @@ import {FormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BrowserModule} from '@angular/platform-browser';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
+import {DesktopRoutingModule} from "./desktop-routing.module";
 
 @NgModule({
   declarations: [
@@ -47,11 +46,10 @@ import {MatInputModule} from '@angular/material/input';
     NgbModule,
     RouterModule,
     FontAwesomeModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     NgxChartsModule,
     MatDatepickerModule,
-    MatInputModule
+    MatInputModule,
+    DesktopRoutingModule
   ],
   providers: [
     DateTimeUtility,
@@ -65,4 +63,5 @@ import {MatInputModule} from '@angular/material/input';
     SortableDirective
   ]
 })
-export class DesktopModule {}
+export class DesktopModule {
+}
