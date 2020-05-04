@@ -51,7 +51,7 @@ export class DaySelectComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Switches to day of week that was selected.
+   * Switches to period that was selected.
    *
    * @param selectedPeriod Selected day.
    */

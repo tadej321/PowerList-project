@@ -1,12 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { single } from './data';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {TaskService} from '../task-list/task.service';
 import * as moment from 'moment';
-import {Subject, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TaskModel} from '../task-list/task.model';
-import {map, take} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {PeriodModel} from '../day-select/period.model';
 
 @Component({

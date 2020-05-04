@@ -62,7 +62,7 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           this.saveAuthData(token, expirationDate, response.userCredentials);
-          this.router.navigate(['desktop']);
+          this.router.navigate(['desktop/tasks']);
         }
       }).catch(error => {
         this.authStatusListener.next(false);
