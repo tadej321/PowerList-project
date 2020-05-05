@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import {TaskModel} from './task.model';
+import {TaskModel} from '../../models/task.model';
 import {HttpClient} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {Injectable} from '@angular/core';

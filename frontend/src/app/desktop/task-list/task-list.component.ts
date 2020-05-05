@@ -1,5 +1,5 @@
 import {Component, DoCheck, IterableDiffers, OnDestroy, OnInit} from '@angular/core';
-import { TaskModel } from './task.model';
+import { TaskModel } from '../../models/task.model';
 import {TaskService} from './task.service';
 import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';

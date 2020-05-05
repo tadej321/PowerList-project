@@ -35,7 +35,8 @@
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2",
     "@angular/material": "latest",
-    "@angular/material-moment-adapter": "latest"
+    "@angular/material-moment-adapter": "latest",
+    "@ngrx/store": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.6",

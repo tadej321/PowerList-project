@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskService} from '../task.service';
-import {TaskModel} from '../task.model';
+import {TaskModel} from '../../../models/task.model';
 
 /**
  * Represents a task in it's editable state.

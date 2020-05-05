@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {TaskService} from '../task.service';
-import {TaskModel} from '../task.model';
+import {TaskModel} from '../../../models/task.model';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 /**
