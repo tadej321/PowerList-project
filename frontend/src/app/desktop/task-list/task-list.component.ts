@@ -1,12 +1,18 @@
 import {Component, DoCheck, IterableDiffers, OnDestroy, OnInit} from '@angular/core';
-import { TaskModel } from './task.model';
+import { Task } from '../../models/task.model';
 import {TaskService} from './task.service';
-import {DateTimeUtility} from '../../shared/date-time.utility';
 import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
+import {PeriodModel} from '../../models/period.model';
+import {Store} from '@ngrx/store';
+import * as TaskListActions from '../../store/actions/task-list.actions';
+import {async} from "rxjs/internal/scheduler/async";
+import {take} from "rxjs/operators";
 
-
+/**
+ * Represents the tab that displays the tasks.
+ */
 
 @Component ({
   selector: 'app-task-list',
@@ -16,55 +22,67 @@ import {Subscription} from 'rxjs';
 })
  export class TaskListComponent implements OnInit, OnDestroy, DoCheck {
   private taskSub: Subscription;
-  tasks: TaskModel[] = [];
+  // tasks: Observable<{tasks: Task[]}>;
+  tasks: Task[] = [];
 
 
   dateString;
   dayString;
 
-  private curentIndex;
+  private currentIndex;
   private newIndex;
 
   private differ: any;
-  private displayList = false;
+  public displayList = false;
+  public period: PeriodModel[] = [];
 
-  constructor(public taskService: TaskService, differs: IterableDiffers) {
+  constructor(
+    private taskService: TaskService,
+    differs: IterableDiffers,
+    private store: Store<{taskList: {tasks: Task[]}}>
+  ) {
     this.differ = differs.find([]).create(null);
   }
 
   ngOnInit() {
     this.displayList = false;
-    this.taskService.getTasksOfDay(moment().format('YYYY-MM-DD'));
+    this.taskService.getTasksOfDate(moment());
+
+    const weekStart = moment().startOf('isoWeek');
+
+    for (let i = 0; i <= 6; i++) {
+      const date = moment(weekStart).add(i, 'days');
+      this.period.push({label: date.format('dddd'), startDate: date});
+    }
+
+    // this.tasks = this.store.select('taskList');
     this.taskSub = this.taskService.getTaskUpdatedListener()
-      .subscribe((taskData: {tasks: TaskModel[]}) => {
+      .subscribe((taskData: {tasks: Task[]}) => {
+        console.log(taskData);
         this.tasks = taskData.tasks;
         this.displayList = true;
       });
-
-    const dateTimeUtility = new DateTimeUtility();
-
-    // if (this.taskService.taskArray.length !== 0) {
-    //   this.tasks = moment(this.taskService.taskArray[0].date).format('LL') === moment().format('LL') ? this.taskService.taskArray : [];
-    // }
-
-    // this.dateString = this.tasks === [] ? moment().format('LL') : this.tasks[0].date.format('LL');
-    // this.dayString = this.tasks === [] ? moment().format('dddd') : this.tasks[0].date.format('dddd');
   }
 
   ngOnDestroy() {
-    this.taskSub.unsubscribe();
+    // this.taskSub.unsubscribe();
   }
 
-
+  /**
+   * Requests the addition of a new task
+   */
   onAddTask() {
-    this.taskService.addTask();
+      this.taskService.addTask();
   }
 
+  /**
+   *
+   * */
   sort(event: SortEvent) {
     const current = this.tasks[event.currentIndex];
     const swapWith = this.tasks[event.newIndex];
 
-    this.curentIndex = event.newIndex;
+    this.currentIndex = event.newIndex;
     this.newIndex = event.currentIndex;
 
     current.index = event.newIndex;
@@ -77,8 +95,8 @@ import {Subscription} from 'rxjs';
   }
 
   update() {
-    if (this.curentIndex && this.newIndex) {
-      this.taskService.updateTask(this.tasks[this.curentIndex]);
+    if (this.currentIndex && this.newIndex) {
+      this.taskService.updateTask(this.tasks[this.currentIndex]);
       this.taskService.updateTask(this.tasks[this.newIndex]);
 
       this.ngOnInit();

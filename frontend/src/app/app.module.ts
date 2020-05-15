@@ -7,8 +7,12 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthInterceptor} from './authentication/auth-interceptor';
 import {AuthGuard} from './authentication/auth-guard';
-import {DesktopModule} from './desktop/desktop.module';
-import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {StoreModule} from '@ngrx/store';
+import {taskListReducer} from './store/reducers/task-list.reducer';
 
 
 @NgModule({
@@ -18,11 +22,14 @@ import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
     MenuComponent,
   ],
   imports: [
-    DesktopModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    StoreModule.forRoot({taskList: taskListReducer}),
+    FontAwesomeModule,
+    MatMomentDateModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     AuthGuard,

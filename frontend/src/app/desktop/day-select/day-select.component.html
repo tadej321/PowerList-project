@@ -1,0 +1,15 @@
+
+<div class="container-fluid" style="margin-top: 20px">
+  <div class="col-12 btn-group btn-group-toggle scrollMenu"  #labelContainer data-toggle="buttons">
+    <label class="btn" *ngFor="let element of periods">
+      <input (click)="onDaySelect(element)" type="radio" name="options" id="{{element}}" >{{element.label}}
+    </label>
+    <!--        <mat-form-field>-->
+    <!--          <input matInput [matDatepicker]="myDatepicker">-->
+    <!--          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>-->
+    <!--          <mat-datepicker #myDatepicker></mat-datepicker>-->
+    <!--        </mat-form-field>-->
+  </div>
+</div>
+
+

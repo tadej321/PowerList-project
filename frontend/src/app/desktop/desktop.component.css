@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+
+  #desktop-inner {
+    height: 60vh;
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  #desktop-inner {
+    height: 60vh;
+    width: 100%;
+  }
+}
+
+#desktop-inner {
+  height: 60vh;
+}

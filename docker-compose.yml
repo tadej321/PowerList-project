@@ -1,0 +1,22 @@
+version: '3.0'
+
+services:
+  angular:
+    container_name: frontend-angular
+    restart: always
+    build: frontend
+    ports:
+      - "8000:80"
+
+  express:
+    build: backend
+    ports:
+      - "3000:3000"
+    links:
+      - database
+
+  database:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"

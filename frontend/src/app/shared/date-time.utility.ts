@@ -8,6 +8,7 @@ export class DateTimeUtility {
   getMonthOfYearArray: () => ReadonlyArray<string>;
   getFormatedDateString: (date: Date) => string;
   getTaskDateString: (date: Date) => string;
+  getDayOfWeek: () => void;
 }
 
 DateTimeUtility.prototype.getFullDatetime = () => {
@@ -22,6 +23,7 @@ DateTimeUtility.prototype.getCurrentDate = () => {
 DateTimeUtility.prototype.getWeekDayArray = () => {
   return dayArray;
 };
+
 
 DateTimeUtility.prototype.getMonthOfYearArray = () => {
   return monthArray;

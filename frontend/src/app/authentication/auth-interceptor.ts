@@ -18,6 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const authToken = this.authService.getToken();
 
+    this.authService.resetAuthTimer(3600);
+
     const authRequest = req.clone( {
       headers: req.headers.set('Authorization', 'Bearer' + authToken)
     });

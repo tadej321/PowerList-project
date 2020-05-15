@@ -1,6 +1,12 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {TaskService} from '../task.service';
-import {TaskModel} from '../task.model';
+import {Task} from '../../../models/task.model';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {Store} from "@ngrx/store";
+
+/**
+ * Represents the task.
+ */
 
 @Component({
   selector: 'app-task-item',
@@ -9,31 +15,58 @@ import {TaskModel} from '../task.model';
 })
 
 export class TaskItemComponent implements OnInit {
-  @Input() task: TaskModel;
+  @Input() task: Task;
   @Input() index: number;
-  constructor(public taskService: TaskService) {
+
+  public remove = faTimes;
+
+  constructor(
+    private taskService: TaskService,
+    private store: Store<{taskList: {tasks: Task[]}}>
+  ) {
   }
 
   ngOnInit() {
   }
 
-  // Call change to edit mode method
+  /**
+   * Requests to change the state of the task to editable
+   */
   onTaskEdit() {
-    console.log(this.task.id);
     this.taskService.editTask(this.task.id);
   }
 
-  // Call remove task method
+  /**
+   * Requests the removal of the task
+   */
   onTaskRemove() {
     this.taskService.removeTask(this.task.id);
   }
 
-  // Call update task method
+  /**
+   * Requests the update of the tasks checkbox state
+   */
   onCheckboxChange() {
-    const task: TaskModel = {
+    const task: Task = {
       id: this.task.id,
       description: this.task.description,
       completion: !this.task.completion,
+      date: this.task.date,
+      index: this.task.index
+    };
+    this.taskService.updateTask(task);
+  }
+
+  /**
+   * Sends the updated information for saving.
+   *
+   * @param descriptionInput New task description.
+   */
+  onSaveTask(descriptionInput: HTMLInputElement) {
+    const task: Task = {
+      id: this.task.id,
+      description: descriptionInput.value,
+      completion: this.task.completion,
       date: this.task.date,
       index: this.task.index
     };

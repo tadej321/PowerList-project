@@ -16,7 +16,7 @@ router.put('',
 router.get('',
     taskController.get
 );
-router.get('/:date',
+router.get('/:startDate/:endDate',
     taskController.getByDate
 );
 router.delete('/:id',

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {CommonModule} from '@angular/common';
@@ -16,4 +16,5 @@ import {FormsModule} from "@angular/forms";
     FormsModule
   ]
 })
-export class AuthModule {}
+export class AuthModule {
+}

@@ -1,29 +1,51 @@
 import * as moment from 'moment';
-import {TaskModel} from './task.model';
+import {Task} from '../../models/task.model';
 import {HttpClient} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
-import {Subject} from "rxjs";
-import {environment} from "../../../environments/environment";
+import {map} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 const BACKEND_URL = environment.apiUrl + '/task/';
 const BACKEND_USER_URL = environment.apiUrl + '/user/';
 
-const now = moment();
+/** @class TaskService with functions shared between components */
+
 @Injectable({providedIn: 'root'})
 export class TaskService {
+  /**
+   * Houses functions that are used by multiple components, as well as task API functions.
+   *
+   * @constructor
+   */
 
-  private tasks: TaskModel[] = [];
-  private tasksUpdated = new Subject<{tasks: TaskModel[]}>();
+  private tasks: Task[] = [];
+  private tasksUpdated = new Subject<{tasks: Task[]}>();
 
 
 
-  constructor(private http: HttpClient, private router: RouterModule) {}
+  constructor(
+    private http: HttpClient,
+    private router: RouterModule
+  ) {}
 
-  getTasksOfDay(date: string) {
-    this.http.get<{message: string, tasks: any}>(
-      BACKEND_URL + date
+  /**
+   * Fetches tasks between two dates from the database
+   *
+   * @returns Array of tasks with all their information
+   * @param startDate Start date of the tasks we want returned
+   * @param endDate (optional) End date of the tasks we want returned
+   */
+  getTasksOfDate(startDate: moment.Moment, endDate?: moment.Moment) {
+
+    if (!endDate) {
+      endDate = startDate.clone();
+      endDate.add(1, 'days');
+    }
+
+    return this.http.get<{message: string, tasks: any}>(
+      BACKEND_URL + startDate.toISOString() + '/' + endDate.toISOString()
     )
       .pipe(map((taskData) => {
         return { tasks: taskData.tasks.map(task => {
@@ -42,27 +64,38 @@ export class TaskService {
         this.tasksUpdated.next({tasks: [...this.tasks]});
       });
   }
-
+  /**
+   * Returns the tasksUpdated Subject as an observable
+   *
+   * @returns tasksUpdated Observable
+   */
   getTaskUpdatedListener() {
     return this.tasksUpdated.asObservable();
   }
 
-// Save changes of an edited task to the array
-  updateTask(updatedTask: TaskModel) {
-    const taskData: TaskModel = {
+/**
+ * Calls the put API, and provides the updated information.
+ * Also updates the tasks array.
+ *
+ * @param updatedTask object holding the updated information of the task
+ */
+  updateTask(updatedTask: Task) {
+
+    const taskData: Task = {
       id: updatedTask.id,
       description: updatedTask.description,
       completion: updatedTask.completion,
       date: updatedTask.date,
       index: updatedTask.index
     };
-    console.log(taskData);
-    // Leave the current description if new wasn't provided
+
     if (updatedTask.description !== '') {
+
       this.http.put(BACKEND_URL, taskData)
         .subscribe(response => {
           const updatedTasks = [...this.tasks];
           const oldTaskIndex = updatedTasks.findIndex(i => i.id === updatedTask.id);
+
           updatedTasks[oldTaskIndex] = {
             id: updatedTask.id,
             description: updatedTask.description,
@@ -71,19 +104,28 @@ export class TaskService {
             edit: false,
             index:  updatedTask.index
           };
+
           this.tasks = updatedTasks;
           this.tasksUpdated.next({tasks: [...this.tasks]});
         });
     } else {
+
       const updatedTasks = [...this.tasks];
       const oldTaskIndex = updatedTasks.findIndex(i => i.id === updatedTask.id);
+
       updatedTasks[oldTaskIndex].edit = false;
+
       this.tasks = updatedTasks;
       this.tasksUpdated.next({tasks: [...this.tasks]});
     }
   }
 
-// Change to edit mode of an task item
+
+  /**
+   * Changes the state of the edit field of a certain task.
+   *
+   * @param editedTaskId Unique id of the task
+   */
   editTask(editedTaskId: string) {
     const updatedTasks = [...this.tasks];
     const taskIndex = updatedTasks.findIndex(i => i.id === editedTaskId);
@@ -92,9 +134,12 @@ export class TaskService {
     this.tasksUpdated.next({tasks: [...this.tasks]});
   }
 
-// Change the state of the checkbox to checked or to unchecked.
-
-// Remove the task from the array.
+  /**
+   * Takes an id of the task and calls the delete API with the id as a router param.
+   * Also removes the task from the tasks array.
+   *
+   * @param id Unique id of the task
+   */
   removeTask(id: string) {
     this.http.delete<{message: string}>(BACKEND_URL + id)
     .subscribe(response => {
@@ -113,20 +158,22 @@ export class TaskService {
 
   }
 
-// Add a new task to the array
+  /**
+   * Creates a new task and calls the post API providing the new task information
+   * Also add the task to the tasks array
+   */
   addTask() {
     const taskData = {
       description: '',
       completion: false,
-      date: moment().format('YYYY-MM-DD'),
+      date: moment(),
       index: this.tasks.length
     };
-    console.log(taskData);
-    this.http.post<{message: string, task: TaskModel}>(
+    this.http.post<{message: string, task: Task}>(
       BACKEND_URL,
       taskData
     ).subscribe((response) => {
-      const task: TaskModel = {
+      const task: Task = {
         id: response.task.id,
         description: '',
         completion: false,
@@ -138,10 +185,6 @@ export class TaskService {
 
       this.tasksUpdated.next({tasks: [...this.tasks]});
     });
-  }
-
-  changeDay() {
-
   }
 
 }

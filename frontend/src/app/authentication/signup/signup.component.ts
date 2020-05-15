@@ -1,7 +1,7 @@
-import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
-import {Observable, Subscription} from 'rxjs';
-import {NgForm, NgModelGroup} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {NgForm} from '@angular/forms';
 
 @Component({
   templateUrl: './signup.component.html',
@@ -10,8 +10,8 @@ import {NgForm, NgModelGroup} from '@angular/forms';
 
 export class SignupComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
-  private passwordMismatch = false;
-  private emailTaken = false;
+  public passwordMismatch = false;
+  public emailTaken = false;
 
   constructor(public authService: AuthService) {}
 
@@ -32,7 +32,6 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.passwordMismatch = false;
     this.emailTaken = false;
     if (form.invalid) {
-      console.log("REQ");
       event.preventDefault();
       return;
     }

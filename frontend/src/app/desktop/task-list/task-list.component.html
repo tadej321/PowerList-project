@@ -1,54 +1,52 @@
-<div class="container-fluid" appMovableArea>
+
+
+<div class="d-flex flex-column justify-content-center p-0 h-100" appMovableArea>
+  <div>
+    <button class="btn btn-dark dropdown-toggle" id="sideMenuToggler" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
   <!-- Date information -->
   <div style="padding: 40px">
     <h3>{{dayString}}</h3>
     <p>{{dateString}}</p>
   </div>
   <!-- Add task button-->
-  <div class="col-md-11 text-center">
-    <button style="width: 20%; height: 30px;" (click)="onAddTask()">Add</button>
+  <div class="text-center">
+    <button class="btn btn-outline-success" id="addButton" (click)="onAddTask()">Add</button>
   </div>
   <!-- List of Tasks -->
-  <div class="col-md-10" style="padding-left: 70px; background-color: #BEBEBE" appMovable>
+  <div class="d-flex justify-content-center overflow-auto" id="listContainer" style="max-height: 44vh"  appMovable>
     <ul
       *ngIf="displayList"
-      class="list-group"
+      class="list-group p-0 col-md-9"
       appSortableList
       (sort)="sort($event)"
       (update)="update()">
       <!-- Individual task item -->
-      <li class="list-group-item"  *ngFor="let task of tasks" style="padding: 0;" appSortable appBorderHighlight>
+      <li class="list-group-item h-100 bg-white rounded"  *ngFor="let task of tasks"  appBorderHighlight>
         <div>
-          <!-- edit task component -->
-          <app-task-edit
-            *ngIf="task.edit"
-            [task]="task"
-            [taskCount]="tasks.indexOf(task)"
-
-          ></app-task-edit>
-          <!-- Task item component -->
           <app-task-item
-            *ngIf="!task.edit || task.edit === undefined"
             [task]="task"
             [index]="tasks.indexOf(task)"
 
           ></app-task-item>
         </div>
-        <div *ngIf="!task.edit" style="padding: 0; margin: 0;">
-          <div class="list-group-item helper" style="padding: 0;" *appDraggableHelper>
-            <app-task-item
-              [task]="task"
-              [index]="tasks.indexOf(task)"
-            ></app-task-item>
-          </div>
-        </div>
+<!--          <div *ngIf="!task.edit" style="padding: 0; margin: 0;">-->
+<!--            <div class="list-group-item helper" style="padding: 0;" *appDraggableHelper>-->
+<!--              <app-task-item-->
+<!--                [task]="task"-->
+<!--                [index]="tasks.indexOf(task)"-->
+<!--              ></app-task-item>-->
+<!--            </div>-->
+<!--          </div>-->
       </li>
       <li class="task-substitute"></li>
 
     </ul>
   </div>
   <!-- Footer component -->
-  <div class="align-items-end" style="height: 50px">
-    <app-footer></app-footer>
+  <div class="mt-auto " id="day-select-container">
+    <app-day-select [periods]="period"></app-day-select>
   </div>
 </div>
