@@ -1,10 +1,14 @@
 import {Component, DoCheck, IterableDiffers, OnDestroy, OnInit} from '@angular/core';
-import { TaskModel } from '../../models/task.model';
+import { Task } from '../../models/task.model';
 import {TaskService} from './task.service';
 import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';
-import {Subscription} from 'rxjs';
-import {PeriodModel} from "../day-select/period.model";
+import {Observable, Subscription} from 'rxjs';
+import {PeriodModel} from '../../models/period.model';
+import {Store} from '@ngrx/store';
+import * as TaskListActions from '../../store/actions/task-list.actions';
+import {async} from "rxjs/internal/scheduler/async";
+import {take} from "rxjs/operators";
 
 /**
  * Represents the tab that displays the tasks.
@@ -18,7 +22,8 @@ import {PeriodModel} from "../day-select/period.model";
 })
  export class TaskListComponent implements OnInit, OnDestroy, DoCheck {
   private taskSub: Subscription;
-  tasks: TaskModel[] = [];
+  // tasks: Observable<{tasks: Task[]}>;
+  tasks: Task[] = [];
 
 
   dateString;
@@ -31,7 +36,11 @@ import {PeriodModel} from "../day-select/period.model";
   public displayList = false;
   public period: PeriodModel[] = [];
 
-  constructor(public taskService: TaskService, differs: IterableDiffers) {
+  constructor(
+    private taskService: TaskService,
+    differs: IterableDiffers,
+    private store: Store<{taskList: {tasks: Task[]}}>
+  ) {
     this.differ = differs.find([]).create(null);
   }
 
@@ -46,8 +55,9 @@ import {PeriodModel} from "../day-select/period.model";
       this.period.push({label: date.format('dddd'), startDate: date});
     }
 
+    // this.tasks = this.store.select('taskList');
     this.taskSub = this.taskService.getTaskUpdatedListener()
-      .subscribe((taskData: {tasks: TaskModel[]}) => {
+      .subscribe((taskData: {tasks: Task[]}) => {
         console.log(taskData);
         this.tasks = taskData.tasks;
         this.displayList = true;
@@ -55,14 +65,14 @@ import {PeriodModel} from "../day-select/period.model";
   }
 
   ngOnDestroy() {
-    this.taskSub.unsubscribe();
+    // this.taskSub.unsubscribe();
   }
 
   /**
    * Requests the addition of a new task
    */
   onAddTask() {
-    this.taskService.addTask();
+      this.taskService.addTask();
   }
 
   /**

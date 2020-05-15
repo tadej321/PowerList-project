@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {AuthDataModel} from './auth-data.model';
+import {AuthDataModel} from '../models/auth-data.model';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 

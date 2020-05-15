@@ -1,7 +1,8 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {TaskService} from '../task.service';
-import {TaskModel} from '../../../models/task.model';
+import {Task} from '../../../models/task.model';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {Store} from "@ngrx/store";
 
 /**
  * Represents the task.
@@ -14,12 +15,15 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class TaskItemComponent implements OnInit {
-  @Input() task: TaskModel;
+  @Input() task: Task;
   @Input() index: number;
 
   public remove = faTimes;
 
-  constructor(public taskService: TaskService) {
+  constructor(
+    private taskService: TaskService,
+    private store: Store<{taskList: {tasks: Task[]}}>
+  ) {
   }
 
   ngOnInit() {
@@ -43,7 +47,7 @@ export class TaskItemComponent implements OnInit {
    * Requests the update of the tasks checkbox state
    */
   onCheckboxChange() {
-    const task: TaskModel = {
+    const task: Task = {
       id: this.task.id,
       description: this.task.description,
       completion: !this.task.completion,
@@ -59,7 +63,7 @@ export class TaskItemComponent implements OnInit {
    * @param descriptionInput New task description.
    */
   onSaveTask(descriptionInput: HTMLInputElement) {
-    const task: TaskModel = {
+    const task: Task = {
       id: this.task.id,
       description: descriptionInput.value,
       completion: this.task.completion,

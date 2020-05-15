@@ -10,8 +10,7 @@ import {
 } from '@angular/core';
 import {TaskService} from '../task-list/task.service';
 import * as moment from 'moment';
-import * as $ from 'jquery';
-import {PeriodModel} from "./period.model";
+import {PeriodModel} from '../../models/period.model';
 
 
 
@@ -39,7 +38,6 @@ export class DaySelectComponent implements OnInit, AfterViewInit {
   constructor(private taskService: TaskService, private elementRef: ElementRef) {}
 
   ngOnInit() {
-
   }
 
   ngAfterViewInit(): void {

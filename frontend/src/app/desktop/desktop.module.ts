@@ -3,7 +3,6 @@ import {DesktopComponent} from './desktop.component';
 import {TaskListComponent} from './task-list/task-list.component';
 import {TaskItemComponent} from './task-list/task-item/task-item.component';
 import {DaySelectComponent} from './day-select/day-select.component';
-import {TaskEditComponent} from './task-list/task-edit/task-edit.component';
 import {BorderHighlightDirective} from '../directives/border-highlight.directive';
 import {DraggableDirective} from '../directives/draggable.directive';
 import {MovableDirective} from '../directives/movable.directive';
@@ -19,7 +18,6 @@ import {FormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {DesktopRoutingModule} from "./desktop-routing.module";
 
@@ -29,8 +27,6 @@ import {DesktopRoutingModule} from "./desktop-routing.module";
     TaskListComponent,
     TaskItemComponent,
     DaySelectComponent,
-    TaskEditComponent,
-    TaskEditComponent,
     BorderHighlightDirective,
     DraggableDirective,
     MovableDirective,
@@ -47,7 +43,6 @@ import {DesktopRoutingModule} from "./desktop-routing.module";
     RouterModule,
     FontAwesomeModule,
     NgxChartsModule,
-    MatDatepickerModule,
     MatInputModule,
     DesktopRoutingModule
   ],

@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import {TaskModel} from '../../models/task.model';
+import {Task} from '../../models/task.model';
 import {HttpClient} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {Injectable} from '@angular/core';
@@ -20,8 +20,8 @@ export class TaskService {
    * @constructor
    */
 
-  private tasks: TaskModel[] = [];
-  private tasksUpdated = new Subject<{tasks: TaskModel[]}>();
+  private tasks: Task[] = [];
+  private tasksUpdated = new Subject<{tasks: Task[]}>();
 
 
 
@@ -79,9 +79,9 @@ export class TaskService {
  *
  * @param updatedTask object holding the updated information of the task
  */
-  updateTask(updatedTask: TaskModel) {
+  updateTask(updatedTask: Task) {
 
-    const taskData: TaskModel = {
+    const taskData: Task = {
       id: updatedTask.id,
       description: updatedTask.description,
       completion: updatedTask.completion,
@@ -169,11 +169,11 @@ export class TaskService {
       date: moment(),
       index: this.tasks.length
     };
-    this.http.post<{message: string, task: TaskModel}>(
+    this.http.post<{message: string, task: Task}>(
       BACKEND_URL,
       taskData
     ).subscribe((response) => {
-      const task: TaskModel = {
+      const task: Task = {
         id: response.task.id,
         description: '',
         completion: false,

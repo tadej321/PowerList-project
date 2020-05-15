@@ -14,14 +14,17 @@ const noteRoutes = require('./routes/note.routes');
 
 const app = express();
 
-const url = 'mongodb://localhost/PowerList';
+const url = 'mongodb://mongo:27017/PowerList';
 
 const passportOpts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.JWT_KEY
 };
 
-db.connect(process.env.DB_URI || url)
+db.connect(process.env.DB_URI || url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => {
         console.log("Connected to database");
     })

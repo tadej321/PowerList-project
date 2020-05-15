@@ -10,7 +10,9 @@ import {AuthGuard} from './authentication/auth-guard';
 import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {StoreModule} from '@ngrx/store';
+import {taskListReducer} from './store/reducers/task-list.reducer';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HttpClientModule,
     AppRoutingModule,
     NgbDropdownModule,
+    StoreModule.forRoot({taskList: taskListReducer}),
     FontAwesomeModule,
     MatMomentDateModule,
     BrowserAnimationsModule,

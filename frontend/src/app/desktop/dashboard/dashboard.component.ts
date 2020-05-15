@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from '../task-list/task.service';
 import * as moment from 'moment';
 import {Subscription} from 'rxjs';
-import {TaskModel} from '../task-list/task.model';
+import {Task} from '../../models/task.model';
 import {map} from 'rxjs/operators';
-import {PeriodModel} from '../day-select/period.model';
+import {PeriodModel} from '../../models/period.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
-  formatData(taskData: TaskModel[]) {
+  formatData(taskData: Task[]) {
     const formattedData = [{name: 'complete', value: 0}, {name: 'failed', value: 0}];
     for (const task of taskData) {
       if (task.completion === true ) {
