@@ -7,6 +7,7 @@ const routes: Routes = [
   {path: 'auth', loadChildren: () => import('./authentication/auth.module').then(m => m.AuthModule)},
   {path: '', redirectTo: 'desktop/tasks', pathMatch: 'full'},
   {path: '', loadChildren: () => import('./desktop/desktop.module').then(m => m.DesktopModule), canLoad: [AuthGuard]}
+
 ];
 
 @NgModule({
