@@ -3,13 +3,9 @@ import { Task } from '../../models/task.model';
 import {TaskService} from './task.service';
 import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {PeriodModel} from '../../models/period.model';
 import {Store} from '@ngrx/store';
-import * as TaskListActions from '../../store/actions/task-list.actions';
-import {async} from "rxjs/internal/scheduler/async";
-import {take} from "rxjs/operators";
-
 /**
  * Represents the tab that displays the tasks.
  */
