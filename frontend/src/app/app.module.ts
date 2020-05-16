@@ -11,8 +11,7 @@ import {NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {StoreModule} from '@ngrx/store';
-import {taskListReducer} from './store/reducers/task-list.reducer';
+
 
 
 @NgModule({
@@ -26,7 +25,6 @@ import {taskListReducer} from './store/reducers/task-list.reducer';
     HttpClientModule,
     AppRoutingModule,
     NgbDropdownModule,
-    StoreModule.forRoot({taskList: taskListReducer}),
     FontAwesomeModule,
     MatMomentDateModule,
     BrowserAnimationsModule,
