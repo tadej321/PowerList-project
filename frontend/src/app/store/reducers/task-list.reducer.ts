@@ -1,10 +1,9 @@
 import * as TaskListActions from '../actions/task-list.actions';
 import * as moment from "moment";
-import {Task} from "../../models/task.model";
 
 const initialState = {
   tasks: [
-    new Task('asd79d698a7sd', 'Task 1', false, moment(), 0, false)
+    // new Task('asd79d698a7sd', 'Task 1', false, moment(), 0, false)
   ]
 };
 
