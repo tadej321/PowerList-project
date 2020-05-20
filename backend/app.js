@@ -14,7 +14,7 @@ const noteRoutes = require('./routes/note.routes');
 
 const app = express();
 
-const url = 'mongodb://mongo:27017/PowerList';
+const url = 'mongodb://localhost/PowerList';
 
 const passportOpts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

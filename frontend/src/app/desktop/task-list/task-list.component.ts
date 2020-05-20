@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import {SortEvent} from '../../directives/sortable-list.directive';
 import {Subscription} from 'rxjs';
 import {PeriodModel} from '../../models/period.model';
-import {Store} from '@ngrx/store';
 /**
  * Represents the tab that displays the tasks.
  */
@@ -35,7 +34,6 @@ import {Store} from '@ngrx/store';
   constructor(
     private taskService: TaskService,
     differs: IterableDiffers,
-    private store: Store<{taskList: {tasks: Task[]}}>
   ) {
     this.differ = differs.find([]).create(null);
   }

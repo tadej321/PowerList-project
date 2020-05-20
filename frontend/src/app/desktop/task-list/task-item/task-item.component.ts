@@ -2,8 +2,6 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {TaskService} from '../task.service';
 import {Task} from '../../../models/task.model';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {Store} from "@ngrx/store";
-
 /**
  * Represents the task.
  */
@@ -21,8 +19,7 @@ export class TaskItemComponent implements OnInit {
   public remove = faTimes;
 
   constructor(
-    private taskService: TaskService,
-    private store: Store<{taskList: {tasks: Task[]}}>
+    private taskService: TaskService
   ) {
   }
 
