@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://thetadejkosovel.com/api'
+  apiUrl: 'http://localhost/api'
 };

@@ -8,7 +8,7 @@ RUN npm run-script build
 
 
 FROM nginx:latest as prod-stage
-COPY --from=build-step /usr/src/app/dist/frontend /usr/share/nginx/html
-COPY ../frontend/default /etc/nginx/sites-available/
+COPY --from=build-step /usr/src/app/dist/frontend /var/www/html/
+COPY ./default /etc/nginx/sites-available/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
