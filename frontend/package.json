@@ -34,7 +34,7 @@
     "@ngrx/store": "latest",
     "@swimlane/ngx-charts": "^13.0.2",
     "bootstrap": "^4.4.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "rxjs": "~6.5.4",
 
     "save": "^2.4.0",
